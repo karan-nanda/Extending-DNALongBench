@@ -1,0 +1,28 @@
+{
+ "args": {
+  "fold": 0,
+  "epochs": 1,
+  "maxlen": 131072,
+  "accum": 8,
+  "lr": 0.0001,
+  "head_lr": 0.001,
+  "wd": 0.01,
+  "seed": 0,
+  "limit": 60,
+  "fasta": "data/eQTL/seqs/hg38.fa",
+  "out": "analysis/results/finetune"
+ },
+ "history": [
+  {
+   "refalt": 0.5384615384615385,
+   "ref_copy": 0.5384615384615385,
+   "delta": 0.0,
+   "n": 60,
+   "n_pos": 47,
+   "epoch": 1,
+   "train_loss": 0.6781269232432048,
+   "epoch_sec": 195.54275035858154
+  }
+ ],
+ "total_sec": 195.54375505447388
+}

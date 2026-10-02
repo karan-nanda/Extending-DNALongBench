@@ -1,0 +1,48 @@
+{
+ "args": {
+  "v2": "data/eQTL_v2",
+  "fasta": "data/eQTL/seqs/hg38.fa",
+  "version": "matched",
+  "scheme": "chrom",
+  "fold": 0,
+  "mode": "refalt",
+  "epochs": 1,
+  "bs": 2,
+  "lr": 0.005,
+  "wd": 0.01,
+  "workers": 2,
+  "seed": 0,
+  "limit": 32,
+  "max_steps": 0,
+  "out": "analysis\\results\\cnn_smoke\\ablation"
+ },
+ "history": [
+  {
+   "epoch": 1,
+   "train": {
+    "loss": 1.0330768879503012,
+    "auroc": 0.40080971659919035,
+    "auprc": 0.40499846738530726
+   },
+   "valid": {
+    "loss": 1.2357389824464917,
+    "auroc": 0.6538461538461539,
+    "auprc": 0.7042706271803523
+   },
+   "sec": 13.316551208496094
+  }
+ ],
+ "test": {
+  "loss": 1.0648990664631128,
+  "auroc": 0.595703125,
+  "auprc": 0.6120007310739611
+ },
+ "best_valid": 0.6538461538461539,
+ "ablation": {
+  "alt": 0.595703125,
+  "ref_copy": 0.59375,
+  "random_allele": 0.595703125,
+  "frac_embedding_changed": 0.03125,
+  "median_max_abs_diff": 0.0
+ }
+}

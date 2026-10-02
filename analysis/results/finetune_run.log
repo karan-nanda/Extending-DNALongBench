@@ -1,0 +1,157 @@
+C:\Users\knand\AppData\Roaming\Python\Python312\site-packages\sklearn\utils\_param_validation.py:14: UserWarning: A NumPy version >=1.23.5 and <2.3.0 is required for this version of SciPy (detected version 2.4.4)
+  from scipy.sparse import csr_matrix, issparse
+[fold0_len131072] train 4598  test 1212  maxlen 131072
+  e1 200/4598  loss 0.7491  2.51s/pair  peak 6.45 GB
+  e1 400/4598  loss 0.7341  2.60s/pair  peak 6.45 GB
+  e1 600/4598  loss 0.7412  2.76s/pair  peak 6.45 GB
+  e1 800/4598  loss 0.7401  2.93s/pair  peak 6.45 GB
+  e1 1000/4598  loss 0.7337  2.90s/pair  peak 6.45 GB
+  e1 1200/4598  loss 0.7308  2.87s/pair  peak 6.45 GB
+  e1 1400/4598  loss 0.7263  2.88s/pair  peak 6.45 GB
+  e1 1600/4598  loss 0.7227  2.91s/pair  peak 6.45 GB
+  e1 1800/4598  loss 0.7211  2.93s/pair  peak 6.45 GB
+  e1 2000/4598  loss 0.7206  2.94s/pair  peak 6.45 GB
+  e1 2200/4598  loss 0.7198  2.93s/pair  peak 6.45 GB
+  e1 2400/4598  loss 0.7230  2.96s/pair  peak 6.45 GB
+  e1 2600/4598  loss 0.7219  3.03s/pair  peak 6.45 GB
+  e1 2800/4598  loss 0.7309  3.11s/pair  peak 6.45 GB
+  e1 3000/4598  loss 0.7293  3.18s/pair  peak 6.45 GB
+  e1 3200/4598  loss 0.7297  3.29s/pair  peak 6.45 GB
+  e1 3400/4598  loss 0.7347  3.33s/pair  peak 6.45 GB
+  e1 3600/4598  loss 0.7325  3.35s/pair  peak 6.45 GB
+  e1 3800/4598  loss 0.7327  3.33s/pair  peak 6.45 GB
+  e1 4000/4598  loss 0.7325  3.30s/pair  peak 6.45 GB
+  e1 4200/4598  loss 0.7312  3.32s/pair  peak 6.45 GB
+  e1 4400/4598  loss 0.7296  3.33s/pair  peak 6.45 GB
+[fold0_len131072] epoch 1: refalt 0.5430  ref_copy 0.5429  delta +0.00008  (4.59 h)
+  e2 200/4598  loss 0.6955  2.86s/pair  peak 6.45 GB
+  e2 400/4598  loss 0.7199  2.98s/pair  peak 6.45 GB
+  e2 600/4598  loss 0.7256  3.99s/pair  peak 6.45 GB
+  e2 800/4598  loss 0.7222  5.01s/pair  peak 6.45 GB
+  e2 1000/4598  loss 0.7223  4.79s/pair  peak 6.45 GB
+  e2 1200/4598  loss 0.7201  4.66s/pair  peak 6.45 GB
+  e2 1400/4598  loss 0.7150  4.51s/pair  peak 6.45 GB
+  e2 1600/4598  loss 0.7137  4.43s/pair  peak 6.45 GB
+  e2 1800/4598  loss 0.7138  4.30s/pair  peak 6.45 GB
+  e2 2000/4598  loss 0.7150  4.15s/pair  peak 6.45 GB
+  e2 2200/4598  loss 0.7146  4.05s/pair  peak 6.45 GB
+  e2 2400/4598  loss 0.7135  4.00s/pair  peak 6.45 GB
+  e2 2600/4598  loss 0.7148  3.96s/pair  peak 6.45 GB
+  e2 2800/4598  loss 0.7124  3.97s/pair  peak 6.45 GB
+  e2 3000/4598  loss 0.7129  3.94s/pair  peak 6.45 GB
+  e2 3200/4598  loss 0.7129  3.92s/pair  peak 6.45 GB
+  e2 3400/4598  loss 0.7129  3.95s/pair  peak 6.45 GB
+  e2 3600/4598  loss 0.7109  3.93s/pair  peak 6.45 GB
+  e2 3800/4598  loss 0.7096  4.09s/pair  peak 6.45 GB
+  e2 4000/4598  loss 0.7099  4.10s/pair  peak 6.45 GB
+  e2 4200/4598  loss 0.7080  4.58s/pair  peak 6.45 GB
+  e2 4400/4598  loss 0.7050  4.66s/pair  peak 6.45 GB
+[fold0_len131072] epoch 2: refalt 0.5632  ref_copy 0.5633  delta -0.00004  (6.46 h)
+[fold0_len131072] done in 11.04 h
+C:\Users\knand\AppData\Roaming\Python\Python312\site-packages\sklearn\utils\_param_validation.py:14: UserWarning: A NumPy version >=1.23.5 and <2.3.0 is required for this version of SciPy (detected version 2.4.4)
+  from scipy.sparse import csr_matrix, issparse
+[fold1_len131072] train 4857  test 953  maxlen 131072
+  e1 200/4857  loss 0.8209  2.33s/pair  peak 6.45 GB
+  e1 400/4857  loss 0.7505  2.38s/pair  peak 6.45 GB
+  e1 600/4857  loss 0.7495  2.58s/pair  peak 6.45 GB
+  e1 800/4857  loss 0.7349  2.65s/pair  peak 6.45 GB
+  e1 1000/4857  loss 0.7274  2.78s/pair  peak 6.45 GB
+  e1 1200/4857  loss 0.7229  2.79s/pair  peak 6.45 GB
+  e1 1400/4857  loss 0.7184  2.79s/pair  peak 6.45 GB
+  e1 1600/4857  loss 0.7170  2.79s/pair  peak 6.45 GB
+  e1 1800/4857  loss 0.7121  2.82s/pair  peak 6.45 GB
+  e1 2000/4857  loss 0.7158  2.81s/pair  peak 6.45 GB
+  e1 2200/4857  loss 0.7156  2.83s/pair  peak 6.45 GB
+  e1 2400/4857  loss 0.7151  2.89s/pair  peak 6.45 GB
+  e1 2600/4857  loss 0.7143  2.94s/pair  peak 6.45 GB
+  e1 2800/4857  loss 0.7157  3.00s/pair  peak 6.45 GB
+  e1 3000/4857  loss 0.7149  3.04s/pair  peak 6.45 GB
+  e1 3200/4857  loss 0.7151  3.09s/pair  peak 6.45 GB
+  e1 3400/4857  loss 0.7133  3.16s/pair  peak 6.45 GB
+  e1 3600/4857  loss 0.7136  3.17s/pair  peak 6.45 GB
+  e1 3800/4857  loss 0.7128  3.15s/pair  peak 6.45 GB
+  e1 4000/4857  loss 0.7125  3.16s/pair  peak 6.45 GB
+  e1 4200/4857  loss 0.7123  3.21s/pair  peak 6.45 GB
+  e1 4400/4857  loss 0.7129  3.25s/pair  peak 6.45 GB
+  e1 4600/4857  loss 0.7124  3.26s/pair  peak 6.45 GB
+  e1 4800/4857  loss 0.7124  3.27s/pair  peak 6.45 GB
+[fold1_len131072] epoch 1: refalt 0.5651  ref_copy 0.5652  delta -0.00001  (4.63 h)
+  e2 200/4857  loss 0.6963  2.74s/pair  peak 6.45 GB
+  e2 400/4857  loss 0.6804  2.99s/pair  peak 6.45 GB
+  e2 600/4857  loss 0.6920  3.33s/pair  peak 6.45 GB
+  e2 800/4857  loss 0.6897  3.46s/pair  peak 6.45 GB
+  e2 1000/4857  loss 0.6847  3.43s/pair  peak 6.45 GB
+  e2 1200/4857  loss 0.6867  3.54s/pair  peak 6.45 GB
+  e2 1400/4857  loss 0.6909  3.56s/pair  peak 6.45 GB
+  e2 1600/4857  loss 0.6909  3.55s/pair  peak 6.45 GB
+  e2 1800/4857  loss 0.6921  3.51s/pair  peak 6.45 GB
+  e2 2000/4857  loss 0.6933  3.46s/pair  peak 6.45 GB
+  e2 2200/4857  loss 0.6969  3.44s/pair  peak 6.45 GB
+  e2 2400/4857  loss 0.6958  3.48s/pair  peak 6.45 GB
+  e2 2600/4857  loss 0.6947  3.55s/pair  peak 6.45 GB
+  e2 2800/4857  loss 0.6979  3.58s/pair  peak 6.45 GB
+  e2 3000/4857  loss 0.6982  3.59s/pair  peak 6.45 GB
+  e2 3200/4857  loss 0.6971  3.62s/pair  peak 6.45 GB
+  e2 3400/4857  loss 0.7022  3.67s/pair  peak 6.45 GB
+  e2 3600/4857  loss 0.7023  3.64s/pair  peak 6.45 GB
+  e2 3800/4857  loss 0.7011  3.61s/pair  peak 6.45 GB
+  e2 4000/4857  loss 0.7027  3.60s/pair  peak 6.45 GB
+  e2 4200/4857  loss 0.7021  3.61s/pair  peak 6.45 GB
+  e2 4400/4857  loss 0.7024  3.62s/pair  peak 6.45 GB
+  e2 4600/4857  loss 0.7029  3.82s/pair  peak 6.45 GB
+  e2 4800/4857  loss 0.7023  3.84s/pair  peak 6.45 GB
+[fold1_len131072] epoch 2: refalt 0.5722  ref_copy 0.5721  delta +0.00016  (5.41 h)
+[fold1_len131072] done in 10.04 h
+C:\Users\knand\AppData\Roaming\Python\Python312\site-packages\sklearn\utils\_param_validation.py:14: UserWarning: A NumPy version >=1.23.5 and <2.3.0 is required for this version of SciPy (detected version 2.4.4)
+  from scipy.sparse import csr_matrix, issparse
+[fold2_len131072] train 4727  test 1083  maxlen 131072
+  e1 200/4727  loss 0.7995  2.47s/pair  peak 6.45 GB
+  e1 400/4727  loss 0.7692  2.57s/pair  peak 6.45 GB
+  e1 600/4727  loss 0.7490  2.75s/pair  peak 6.45 GB
+  e1 800/4727  loss 0.7365  2.87s/pair  peak 6.45 GB
+  e1 1000/4727  loss 0.7325  2.89s/pair  peak 6.45 GB
+  e1 1200/4727  loss 0.7266  3.09s/pair  peak 6.45 GB
+  e1 1400/4727  loss 0.7254  3.19s/pair  peak 6.45 GB
+  e1 1600/4727  loss 0.7213  3.33s/pair  peak 6.45 GB
+  e1 1800/4727  loss 0.7226  3.30s/pair  peak 6.45 GB
+  e1 2000/4727  loss 0.7210  3.33s/pair  peak 6.45 GB
+  e1 2200/4727  loss 0.7204  3.39s/pair  peak 6.45 GB
+  e1 2400/4727  loss 0.7170  4.03s/pair  peak 6.45 GB
+  e1 2600/4727  loss 0.7125  4.01s/pair  peak 6.45 GB
+  e1 2800/4727  loss 0.7140  4.00s/pair  peak 6.45 GB
+  e1 3000/4727  loss 0.7124  4.01s/pair  peak 6.45 GB
+  e1 3200/4727  loss 0.7153  4.01s/pair  peak 6.45 GB
+  e1 3400/4727  loss 0.7161  4.03s/pair  peak 6.45 GB
+  e1 3600/4727  loss 0.7149  4.00s/pair  peak 6.45 GB
+  e1 3800/4727  loss 0.7140  3.96s/pair  peak 6.45 GB
+  e1 4000/4727  loss 0.7131  3.94s/pair  peak 6.45 GB
+  e1 4200/4727  loss 0.7126  3.92s/pair  peak 6.45 GB
+  e1 4400/4727  loss 0.7118  3.91s/pair  peak 6.45 GB
+  e1 4600/4727  loss 0.7111  3.92s/pair  peak 6.45 GB
+[fold2_len131072] epoch 1: refalt 0.5663  ref_copy 0.5663  delta +0.00005  (5.45 h)
+  e2 200/4727  loss 0.7118  3.53s/pair  peak 6.45 GB
+  e2 400/4727  loss 0.7055  3.33s/pair  peak 6.45 GB
+  e2 600/4727  loss 0.7052  3.42s/pair  peak 6.45 GB
+  e2 800/4727  loss 0.7022  3.49s/pair  peak 6.45 GB
+  e2 1000/4727  loss 0.7047  3.49s/pair  peak 6.45 GB
+  e2 1200/4727  loss 0.7065  3.65s/pair  peak 6.45 GB
+  e2 1400/4727  loss 0.7061  3.90s/pair  peak 6.45 GB
+  e2 1600/4727  loss 0.7038  3.85s/pair  peak 6.45 GB
+  e2 1800/4727  loss 0.7056  3.76s/pair  peak 6.45 GB
+  e2 2000/4727  loss 0.7063  3.76s/pair  peak 6.45 GB
+  e2 2200/4727  loss 0.7048  3.74s/pair  peak 6.45 GB
+  e2 2400/4727  loss 0.7032  3.70s/pair  peak 6.45 GB
+  e2 2600/4727  loss 0.7019  3.69s/pair  peak 6.45 GB
+  e2 2800/4727  loss 0.6999  3.69s/pair  peak 6.45 GB
+  e2 3000/4727  loss 0.7011  3.68s/pair  peak 6.45 GB
+  e2 3200/4727  loss 0.6993  3.85s/pair  peak 6.45 GB
+  e2 3400/4727  loss 0.6990  3.85s/pair  peak 6.45 GB
+  e2 3600/4727  loss 0.6976  3.84s/pair  peak 6.45 GB
+  e2 3800/4727  loss 0.6978  3.88s/pair  peak 6.45 GB
+  e2 4000/4727  loss 0.6985  3.87s/pair  peak 6.45 GB
+  e2 4200/4727  loss 0.6992  3.90s/pair  peak 6.45 GB
+  e2 4400/4727  loss 0.6984  3.94s/pair  peak 6.45 GB
+  e2 4600/4727  loss 0.6981  3.95s/pair  peak 6.45 GB
+[fold2_len131072] epoch 2: refalt 0.5293  ref_copy 0.5293  delta +0.00002  (5.49 h)
+[fold2_len131072] done in 10.94 h
+ALL FOLDS DONE

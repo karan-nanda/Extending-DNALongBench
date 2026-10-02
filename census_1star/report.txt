@@ -1,0 +1,180 @@
+========================================================================
+ClinVar census  |  star cutoff: 1+  |  source: clinvar.vcf.gz
+========================================================================
+
+FILTER CASCADE
+  total VCF records                  4,469,028
+  pathogenic / likely pathogenic       346,571
+  ...dropped, below 1 stars              31,815
+  ...surviving                         314,756
+
+CONSEQUENCE BUCKETS (pathogenic, star-filtered, from ClinVar MC field)
+  coding           262,404
+  splice            46,128
+  noncoding          4,470
+  other                  0
+  unannotated        1,754
+
+Q1  GATE -- long-range-eligible non-coding positives
+      candidates: MC non-coding or unannotated, <= 50 bp     5,933
+      located by HGVS name (splice window 50 bp):
+        coding               701   dropped
+        near_splice        3,247   dropped
+        intron_mid            54   eligible
+        deep_intron          538   eligible
+        5UTR/promoter        304   strict
+        3UTR                  53   strict
+        ncRNA_exonic         144   strict
+        genomic_only         755   strict
+        other                137   dropped
+      eligible by HGVS name              1,848
+      GENCODE cross-check of the eligible set:
+        overlaps_CDS         449   dropped
+        small_ncRNA          230   dropped
+        exon_noncoding       426   kept
+        genic_nonexonic      532   kept
+        intergenic           211   kept
+      -> overlaps_CDS = coding in an isoform ClinVar did not name;
+         small_ncRNA = breaks the RNA itself (RMRP, RNU4ATAC, RNU4-2...).
+      regulatory core (gate count)       1,169   (threshold 1,500)
+      strict core (no deep-intronic)       636
+      FAIL -- widening the disease panel cannot fix this (it is all of ClinVar);
+      add non-ClinVar sources (HGMD regulatory, literature curation).
+      note: 46,128 canonical splice variants excluded on purpose;
+      they are non-coding but the signal is local, not long-range.
+
+Q2  GAP G2 -- non-SNV clinical variants
+      VCF, non-coding indels/SVs           817
+      VCF, all buckets, indels/SVs     143,217
+      DNALongBench tests ZERO of these. Any count here is the gap.
+
+      breakdown by variant class (VCF, non-coding only):
+        single_nucleotide_variant     3,653
+        Deletion                        488
+        Microsatellite                  125
+        Duplication                      77
+        Indel                            67
+        Insertion                        54
+        Inversion                         6
+
+      SVs > 50 bp from variant_summary (the VCF omits most CNVs):
+      stars >= 0
+        type                  51bp-1kb    1-10kb  10-100kb 100-450kb 450kb-1Mb      >1Mb   total
+        Deletion                 2,215     1,681     1,183       465        87       198   5,829
+        copy number loss            20        86       196       327       328     2,488   3,445
+        copy number gain             0         6        43        91       150     1,368   1,658
+        Duplication                 72        66       135        71        32        76     452
+        Indel                      237       103        18         3         1         1     363
+        Inversion                    5         6         2         2         2         6      23
+        Microsatellite              11         1         0         0         0         0      12
+        Complex                      0         0         3         2         1         2       8
+        Insertion                    1         1         1         0         0         0       3
+        Translocation                0         0         1         0         0         0       1
+        fits <= 450,000 bp: 7,054
+      stars >= 1
+        type                  51bp-1kb    1-10kb  10-100kb 100-450kb 450kb-1Mb      >1Mb   total
+        Deletion                 1,965     1,250       936       350        62       151   4,714
+        copy number loss            19        56       112       158       167     1,033   1,545
+        copy number gain             0         2        20        44        52       550     668
+        Duplication                 70        63       105        52        24        74     388
+        Indel                      223        51         2         2         0         1     279
+        Inversion                    5         4         2         2         1         3      17
+        Complex                      0         0         1         2         1         0       4
+        Insertion                    0         0         1         0         0         0       1
+        Translocation                0         0         1         0         0         0       1
+        fits <= 450,000 bp: 5,498
+      stars >= 2
+        type                  51bp-1kb    1-10kb  10-100kb 100-450kb 450kb-1Mb      >1Mb   total
+        Deletion                   150        90        60         2         0         0     302
+        copy number loss             0         0         0         0         4        18      22
+        copy number gain             0         0         0         0         0         7       7
+        Duplication                  1         2         3         0         0         0       6
+        Indel                       14         5         1         0         0         0      20
+        Inversion                    0         0         1         0         0         0       1
+        fits <= 450,000 bp: 329
+
+Q3  GAP G1 -- SVs that fit the context AND miss every coding exon
+      (span 51 bp - 450,000 bp; CDS from any GENCODE isoform)
+        region                 >=0*     >=1*     >=2*
+        overlaps_CDS          6,822    5,361      327
+        small_ncRNA              20       11        0
+        exon_noncoding          124       70        1
+        genic_nonexonic          61       43        1
+        intergenic               27       13        0
+      non-CDS SVs at >= 1 star, by type x span (126):
+        Deletion            51bp-1kb:51    1-10kb:29    10-100kb:17    100-450kb:3     
+        copy number loss    1-10kb:2     10-100kb:5     100-450kb:3     
+        Indel               51bp-1kb:4     1-10kb:3     100-450kb:1     
+        Duplication         51bp-1kb:1     10-100kb:3     
+        copy number gain    10-100kb:1     100-450kb:2     
+        Inversion           51bp-1kb:1     
+      -> these are the only SVs whose effect must go through regulation;
+         anything overlapping CDS can be scored by 'did it hit an exon'.
+
+Q4  SPLIT RISK -- gene concentration of the Q1 gate set
+      distinct genes                       431
+      genes covering 50% of positives       33
+      top-20 genes share                44.2%
+      -> if this is concentrated, a chromosome split still leaks.
+         Use gene-level holdout and report both.
+
+      top 20 genes:
+        RMRP                  182
+        NF1                    46
+        DMD                    36
+        HBB                    35
+        ATM                    25
+        APC                    23
+        NA                     22
+        ABCA4                  17
+        RB1                    17
+        CFTR                   14
+        PTEN                   14
+        FBN1                   14
+        FTL                    14
+        LDLR                   12
+        ANKRD26                10
+        TRAPPC9                 9
+        FRRS1L                  7
+        COL5A1                  7
+        MYBPC3                  7
+        MLH1                    6
+
+NEGATIVE POOL (benign / likely benign, star-filtered)
+  coding           823,811
+  noncoding        502,735
+  unannotated        7,956
+  splice               964
+  other                429
+  non-coding/unannotated benign, located by HGVS name:
+    coding                 619
+    near_splice        370,618
+    intron_mid          21,345
+    deep_intron         81,892
+    5UTR/promoter        7,738
+    3UTR                20,604
+    ncRNA_exonic           326
+    genomic_only         5,932
+    other                1,617
+  -> raw counts only. Matching on gene, distance-to-TSS, region class
+     and allele frequency happens in Week 4-7, not here.
+
+TOP DISEASES (Q1 gate set)
+     215  not_provided
+     109  Anauxetic_dysplasia
+      70  Metaphyseal_chondrodysplasia,_McKusick_type
+      61  Hereditary_cancer-predisposing_syndrome
+      21  Neurofibromatosis,_type_1
+      14  Cardiovascular_phenotype
+      14  Beta-thalassemia_HBB/LCRB
+      14  Retinoblastoma
+      12  Familial_cancer_of_breast
+      12  Marfan_syndrome
+      10  Becker_muscular_dystrophy
+       9  Cystic_fibrosis
+       9  Duchenne_muscular_dystrophy
+       8  Ehlers-Danlos_syndrome,_classic_type,_1
+       8  PTEN_hamartoma_tumor_syndrome
+
+variant table written to: census_1star\clinvar_filtered.tsv
+SV table written to:      census_1star\clinvar_sv.tsv

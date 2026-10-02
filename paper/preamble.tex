@@ -1,0 +1,82 @@
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}      % scalable font: microtype expansion needs one
+\usepackage{microtype}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{amssymb}
+\usepackage[round]{natbib}
+\usepackage[skip=4pt,font=small,labelfont=bf]{caption}
+\usepackage{enumitem}
+\usepackage{titling}
+\usepackage{titlesec}
+\usepackage{xcolor}       % hyperref's own color pkg has no blend syntax
+\usepackage[colorlinks=true,allcolors=blue!60!black]{hyperref}
+
+% compact lists -- a 4-page budget does not pay for list padding
+\setlist[itemize]{topsep=2pt,itemsep=1pt,parsep=0pt,leftmargin=1.2em}
+\setlength{\parskip}{0pt}
+\graphicspath{{figures/}}
+
+% [VENUE] the venue's style sets its own title block -- delete this group when
+% you swap one in. article's default wastes ~1.5in at the top of page 1.
+% \preauthor/\postauthor are overridden to keep the byline to one compact line;
+% article's defaults cost about 8 more lines and push the body onto page 5.
+\ifdefined\RECOMB
+  \setlength{\droptitle}{-2em}
+\else
+  \setlength{\droptitle}{-6em}   % 4-page build needs the space
+\fi
+\pretitle{\begin{center}\LARGE}
+\posttitle{\par\end{center}\vskip 0.4em}
+\preauthor{\begin{center}\normalsize}
+\postauthor{\par\end{center}}
+\predate{}\postdate{}
+\setlength{\abovedisplayskip}{4pt}
+\setlength{\belowdisplayskip}{4pt}
+\titlespacing*{\section}{0pt}{1.6ex plus .2ex}{0.9ex}
+\titlespacing*{\paragraph}{0pt}{1.0ex plus .2ex}{0.6em}
+
+% float spacing: article's defaults leave a wide band below a float and a narrow
+% one above it, which reads as the caption belonging to the text underneath
+\setlength{\textfloatsep}{14pt plus 2pt minus 2pt}   % float <-> text, top/bottom of page
+\setlength{\floatsep}{12pt plus 2pt minus 2pt}       % between stacked floats
+\setlength{\intextsep}{12pt plus 2pt minus 2pt}      % float placed mid-text
+
+% float placement: six floats cluster in sections 2-4, and article's defaults
+% (2 per top, 3 per page, 70% of the page) make them queue up and drift forwards
+% into later sections, landing inside other sections' lists.
+\setcounter{topnumber}{3}
+\setcounter{bottomnumber}{2}
+\setcounter{totalnumber}{4}
+\renewcommand{\topfraction}{0.85}
+\renewcommand{\bottomfraction}{0.6}
+\renewcommand{\textfraction}{0.1}
+\renewcommand{\floatpagefraction}{0.7}
+
+% float-only pages: article's defaults are stretchy glue, which spreads two
+% figures to opposite ends of the page. Pack them to the top instead.
+\makeatletter
+\setlength{\@fptop}{0pt}
+\setlength{\@fpsep}{14pt}
+\setlength{\@fpbot}{0pt plus 1fil}
+\makeatother
+\setlength{\abovecaptionskip}{6pt}
+\setlength{\belowcaptionskip}{0pt}
+
+\newcommand{\refalt}{\texttt{refalt}}
+\newcommand{\refcopy}{\texttt{ref\_copy}}
+\newcommand{\diffonly}{\texttt{diff\_only}}
+
+\title{Long-context DNA models do not use the allele:\\
+an audit of DNALongBench's eQTL task}
+
+% [VENUE] anonymise for submission if the venue is double-blind: comment out the
+% \author line below and restore \preauthor{}\postauthor{} above.
+\ifdefined\RECOMB
+  \author{Karandeep Nanda\\\normalsize University of Colorado Boulder}
+\else
+  \author{Karandeep Nanda, \normalsize University of Colorado Boulder}
+\fi
+\date{}
+

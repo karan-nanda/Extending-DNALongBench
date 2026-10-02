@@ -1,0 +1,41 @@
+{
+ "args": {
+  "v2": "data/eQTL_v2",
+  "fasta": "data/eQTL/seqs/hg38.fa",
+  "version": "matched",
+  "scheme": "chrom",
+  "fold": 0,
+  "mode": "published",
+  "epochs": 1,
+  "bs": 2,
+  "lr": 0.005,
+  "wd": 0.01,
+  "workers": 2,
+  "seed": 0,
+  "limit": 16,
+  "max_steps": 0,
+  "out": "analysis\\results\\cnn_smoke"
+ },
+ "history": [
+  {
+   "epoch": 1,
+   "train": {
+    "loss": 0.6931471824645996,
+    "auroc": 0.5,
+    "auprc": 0.5
+   },
+   "valid": {
+    "loss": 0.6987035721540451,
+    "auroc": 0.6349206349206349,
+    "auprc": 0.7075066908400243
+   },
+   "sec": 8.855304956436157
+  }
+ ],
+ "test": {
+  "loss": 0.6762584000825882,
+  "auroc": 0.6818181818181819,
+  "auprc": 0.4432900432900433
+ },
+ "best_valid": 0.6349206349206349
+}

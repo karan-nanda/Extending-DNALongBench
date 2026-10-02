@@ -1,0 +1,213 @@
+published split, Nerve_Tibial: 2973 train rows (388 positive)
+1. INIT SEEDS (train mode, fp32, fixed batches)
+   seed  dead_train   grad_norm  dead_eval  eval_logit_sd
+      0        1.00    0.00e+00       0.00      5.894e-02
+      1        0.00    6.26e+01       0.00      1.366e-01
+      2        0.00    6.33e+01       0.00      1.543e-02
+      3        1.00    0.00e+00       1.00      0.000e+00
+      4        0.00    6.48e+01       0.00      4.132e-02
+      5        0.00    5.47e+01       1.00      0.000e+00
+      6        0.00    6.62e+01       1.00      0.000e+00
+      7        0.00    4.20e+01       0.00      6.308e-02
+      8        0.00    5.64e+01       0.00      7.513e-02
+      9        0.25    2.97e+01       0.00      2.492e-02
+
+2. TRAINING seed 0, published optimiser, 1486 steps
+   steps    1-123  dead 1.00  loss 0.6931  min/max loss 0.6931/0.6931
+   steps  124-246  dead 1.00  loss 0.6931  min/max loss 0.6931/0.6931
+   steps  247-369  dead 1.00  loss 0.6931  min/max loss 0.6931/0.6931
+   steps  370-492  dead 1.00  loss 0.6931  min/max loss 0.6931/0.6931
+   steps  493-615  dead 1.00  loss 0.6931  min/max loss 0.6931/0.6931
+   steps  616-738  dead 1.00  loss 0.6931  min/max loss 0.6931/0.6931
+   steps  739-861  dead 1.00  loss 0.6931  min/max loss 0.6931/0.6931
+   steps  862-984  dead 1.00  loss 0.6931  min/max loss 0.6931/0.6931
+   steps  985-1107 dead 1.00  loss 0.6931  min/max loss 0.6931/0.6931
+   steps 1108-1230 dead 1.00  loss 0.6931  min/max loss 0.6931/0.6931
+   steps 1231-1353 dead 1.00  loss 0.6931  min/max loss 0.6931/0.6931
+   steps 1354-1476 dead 1.00  loss 0.6931  min/max loss 0.6931/0.6931
+   relative weight change ||W - W0|| / ||W0||  (weight decay alone: 0.0716)
+     net.layers.0.layers.0.weight     0.0716
+     net.layers.1.layers.0.weight     0.0716
+     net.layers.2.layers.0.weight     0.0716
+     net.fc.weight                    0.0716
+   after training, eval mode on probe batches: dead 1.00, logit sd 0.000e+00
+
+2. TRAINING seed 1, published optimiser, 1486 steps
+   steps    1-123  dead 0.00  loss 0.7511  min/max loss 0.0000/7.9908
+   steps  124-246  dead 0.00  loss 0.5060  min/max loss 0.0003/5.7005
+   steps  247-369  dead 0.00  loss 0.5928  min/max loss 0.0007/8.1789
+   steps  370-492  dead 0.00  loss 0.5920  min/max loss 0.0000/4.0045
+   steps  493-615  dead 0.00  loss 0.5045  min/max loss 0.0003/2.8312
+   steps  616-738  dead 0.00  loss 0.5302  min/max loss 0.0002/7.2196
+   steps  739-861  dead 0.00  loss 0.4788  min/max loss 0.0006/4.2572
+   steps  862-984  dead 0.00  loss 0.4982  min/max loss 0.0004/5.4712
+   steps  985-1107 dead 0.01  loss 0.4989  min/max loss 0.0002/4.2534
+   steps 1108-1230 dead 0.00  loss 0.4246  min/max loss 0.0014/4.2372
+   steps 1231-1353 dead 0.01  loss 0.4621  min/max loss 0.0005/3.8706
+   steps 1354-1476 dead 0.00  loss 0.4504  min/max loss 0.0002/5.9545
+   relative weight change ||W - W0|| / ||W0||  (weight decay alone: 0.0716)
+     net.layers.0.layers.0.weight     0.8874
+     net.layers.1.layers.0.weight     2.9816
+     net.layers.2.layers.0.weight     2.8046
+     net.fc.weight                    1.3821
+   after training, eval mode on probe batches: dead 0.00, logit sd 1.387e+00
+
+2. TRAINING seed 2, published optimiser, 1486 steps
+   steps    1-123  dead 0.97  loss 0.7194  min/max loss 0.2786/4.3314
+   steps  124-246  dead 1.00  loss 0.6931  min/max loss 0.6931/0.6931
+   steps  247-369  dead 1.00  loss 0.6931  min/max loss 0.6931/0.6931
+   steps  370-492  dead 1.00  loss 0.6931  min/max loss 0.6931/0.6931
+   steps  493-615  dead 1.00  loss 0.6931  min/max loss 0.6931/0.6931
+   steps  616-738  dead 1.00  loss 0.6931  min/max loss 0.6931/0.6931
+   steps  739-861  dead 1.00  loss 0.6931  min/max loss 0.6931/0.6931
+   steps  862-984  dead 1.00  loss 0.6931  min/max loss 0.6931/0.6931
+   steps  985-1107 dead 1.00  loss 0.6931  min/max loss 0.6931/0.6931
+   steps 1108-1230 dead 1.00  loss 0.6931  min/max loss 0.6931/0.6931
+   steps 1231-1353 dead 1.00  loss 0.6931  min/max loss 0.6931/0.6931
+   steps 1354-1476 dead 1.00  loss 0.6931  min/max loss 0.6931/0.6931
+   relative weight change ||W - W0|| / ||W0||  (weight decay alone: 0.0716)
+     net.layers.0.layers.0.weight     0.1851
+     net.layers.1.layers.0.weight     1.0225
+     net.layers.2.layers.0.weight     0.7363
+     net.fc.weight                    0.2043
+   after training, eval mode on probe batches: dead 1.00, logit sd 0.000e+00
+
+2. TRAINING seed 3, published optimiser, 1486 steps
+   steps    1-123  dead 1.00  loss 0.6931  min/max loss 0.6931/0.6931
+   steps  124-246  dead 1.00  loss 0.6931  min/max loss 0.6931/0.6931
+   steps  247-369  dead 1.00  loss 0.6931  min/max loss 0.6931/0.6931
+   steps  370-492  dead 1.00  loss 0.6931  min/max loss 0.6931/0.6931
+   steps  493-615  dead 1.00  loss 0.6931  min/max loss 0.6931/0.6931
+   steps  616-738  dead 1.00  loss 0.6931  min/max loss 0.6931/0.6931
+   steps  739-861  dead 1.00  loss 0.6931  min/max loss 0.6931/0.6931
+   steps  862-984  dead 1.00  loss 0.6931  min/max loss 0.6931/0.6931
+   steps  985-1107 dead 1.00  loss 0.6931  min/max loss 0.6931/0.6931
+   steps 1108-1230 dead 1.00  loss 0.6931  min/max loss 0.6931/0.6931
+   steps 1231-1353 dead 1.00  loss 0.6931  min/max loss 0.6931/0.6931
+   steps 1354-1476 dead 1.00  loss 0.6931  min/max loss 0.6931/0.6931
+   relative weight change ||W - W0|| / ||W0||  (weight decay alone: 0.0716)
+     net.layers.0.layers.0.weight     0.0716
+     net.layers.1.layers.0.weight     0.0716
+     net.layers.2.layers.0.weight     0.0716
+     net.fc.weight                    0.0716
+   after training, eval mode on probe batches: dead 1.00, logit sd 0.000e+00
+
+2. TRAINING seed 4, published optimiser, 1486 steps
+   steps    1-123  dead 0.00  loss 0.8561  min/max loss 0.0000/13.5314
+   steps  124-246  dead 0.00  loss 0.7016  min/max loss 0.0000/7.1060
+   steps  247-369  dead 0.00  loss 0.6207  min/max loss 0.0014/7.0337
+   steps  370-492  dead 0.00  loss 0.6592  min/max loss 0.0001/4.9274
+   steps  493-615  dead 0.00  loss 0.5694  min/max loss 0.0006/5.8537
+   steps  616-738  dead 0.00  loss 0.5841  min/max loss 0.0004/5.7789
+   steps  739-861  dead 0.00  loss 0.5497  min/max loss 0.0009/5.3099
+   steps  862-984  dead 0.00  loss 0.6602  min/max loss 0.0021/7.5721
+   steps  985-1107 dead 0.00  loss 0.4483  min/max loss 0.0001/3.3693
+   steps 1108-1230 dead 0.02  loss 0.5505  min/max loss 0.0001/3.8940
+   steps 1231-1353 dead 0.02  loss 0.3709  min/max loss 0.0003/3.5239
+   steps 1354-1476 dead 0.00  loss 0.3924  min/max loss 0.0001/2.3184
+   relative weight change ||W - W0|| / ||W0||  (weight decay alone: 0.0716)
+     net.layers.0.layers.0.weight     0.7671
+     net.layers.1.layers.0.weight     2.2047
+     net.layers.2.layers.0.weight     2.1942
+     net.fc.weight                    1.4186
+   after training, eval mode on probe batches: dead 0.00, logit sd 1.617e+00
+
+2. TRAINING seed 5, published optimiser, 1486 steps
+   steps    1-123  dead 0.00  loss 0.5836  min/max loss 0.0000/5.8671
+   steps  124-246  dead 0.00  loss 0.8539  min/max loss 0.0000/15.9417
+   steps  247-369  dead 0.00  loss 0.5515  min/max loss 0.0002/6.6757
+   steps  370-492  dead 0.00  loss 0.6421  min/max loss 0.0001/6.3852
+   steps  493-615  dead 0.00  loss 0.7702  min/max loss 0.0002/11.5983
+   steps  616-738  dead 0.00  loss 0.5474  min/max loss 0.0003/4.1620
+   steps  739-861  dead 0.00  loss 0.6563  min/max loss 0.0001/5.7006
+   steps  862-984  dead 0.00  loss 0.5917  min/max loss 0.0022/5.2767
+   steps  985-1107 dead 0.00  loss 0.5304  min/max loss 0.0001/3.3159
+   steps 1108-1230 dead 0.00  loss 0.4906  min/max loss 0.0002/6.1994
+   steps 1231-1353 dead 0.00  loss 0.4888  min/max loss 0.0001/3.5756
+   steps 1354-1476 dead 0.01  loss 0.4945  min/max loss 0.0000/3.3415
+   relative weight change ||W - W0|| / ||W0||  (weight decay alone: 0.0716)
+     net.layers.0.layers.0.weight     0.7547
+     net.layers.1.layers.0.weight     2.1353
+     net.layers.2.layers.0.weight     1.9485
+     net.fc.weight                    1.0055
+   after training, eval mode on probe batches: dead 0.00, logit sd 1.445e+00
+
+2. TRAINING seed 6, published optimiser, 1486 steps
+   steps    1-123  dead 0.98  loss 0.7116  min/max loss 0.6931/2.1988
+   steps  124-246  dead 1.00  loss 0.6931  min/max loss 0.6931/0.6931
+   steps  247-369  dead 1.00  loss 0.6931  min/max loss 0.6931/0.6931
+   steps  370-492  dead 1.00  loss 0.6931  min/max loss 0.6931/0.6931
+   steps  493-615  dead 1.00  loss 0.6931  min/max loss 0.6931/0.6931
+   steps  616-738  dead 1.00  loss 0.6931  min/max loss 0.6931/0.6931
+   steps  739-861  dead 1.00  loss 0.6931  min/max loss 0.6931/0.6931
+   steps  862-984  dead 1.00  loss 0.6931  min/max loss 0.6931/0.6931
+   steps  985-1107 dead 1.00  loss 0.6931  min/max loss 0.6931/0.6931
+   steps 1108-1230 dead 1.00  loss 0.6931  min/max loss 0.6931/0.6931
+   steps 1231-1353 dead 1.00  loss 0.6931  min/max loss 0.6931/0.6931
+   steps 1354-1476 dead 1.00  loss 0.6931  min/max loss 0.6931/0.6931
+   relative weight change ||W - W0|| / ||W0||  (weight decay alone: 0.0716)
+     net.layers.0.layers.0.weight     0.1774
+     net.layers.1.layers.0.weight     0.9534
+     net.layers.2.layers.0.weight     0.6818
+     net.fc.weight                    0.2336
+   after training, eval mode on probe batches: dead 1.00, logit sd 0.000e+00
+
+2. TRAINING seed 7, published optimiser, 1486 steps
+   steps    1-123  dead 0.99  loss 0.6989  min/max loss 0.6931/1.3979
+   steps  124-246  dead 1.00  loss 0.6931  min/max loss 0.6931/0.6931
+   steps  247-369  dead 1.00  loss 0.6931  min/max loss 0.6931/0.6931
+   steps  370-492  dead 1.00  loss 0.6931  min/max loss 0.6931/0.6931
+   steps  493-615  dead 1.00  loss 0.6931  min/max loss 0.6931/0.6931
+   steps  616-738  dead 1.00  loss 0.6931  min/max loss 0.6931/0.6931
+   steps  739-861  dead 1.00  loss 0.6931  min/max loss 0.6931/0.6931
+   steps  862-984  dead 1.00  loss 0.6931  min/max loss 0.6931/0.6931
+   steps  985-1107 dead 1.00  loss 0.6931  min/max loss 0.6931/0.6931
+   steps 1108-1230 dead 1.00  loss 0.6931  min/max loss 0.6931/0.6931
+   steps 1231-1353 dead 1.00  loss 0.6931  min/max loss 0.6931/0.6931
+   steps 1354-1476 dead 1.00  loss 0.6931  min/max loss 0.6931/0.6931
+   relative weight change ||W - W0|| / ||W0||  (weight decay alone: 0.0716)
+     net.layers.0.layers.0.weight     0.1795
+     net.layers.1.layers.0.weight     0.9471
+     net.layers.2.layers.0.weight     0.6742
+     net.fc.weight                    0.2101
+   after training, eval mode on probe batches: dead 1.00, logit sd 0.000e+00
+
+2. TRAINING seed 8, published optimiser, 1486 steps
+   steps    1-123  dead 0.00  loss 1.0927  min/max loss 0.0001/25.5699
+   steps  124-246  dead 0.00  loss 0.9332  min/max loss 0.0009/6.5003
+   steps  247-369  dead 0.00  loss 0.6529  min/max loss 0.0001/13.4462
+   steps  370-492  dead 0.00  loss 0.6735  min/max loss 0.0007/4.3563
+   steps  493-615  dead 0.00  loss 0.4570  min/max loss 0.0001/3.1767
+   steps  616-738  dead 0.00  loss 0.5009  min/max loss 0.0001/7.4794
+   steps  739-861  dead 0.00  loss 0.5124  min/max loss 0.0001/7.8711
+   steps  862-984  dead 0.00  loss 0.3568  min/max loss 0.0000/3.3365
+   steps  985-1107 dead 0.00  loss 0.6254  min/max loss 0.0011/6.1695
+   steps 1108-1230 dead 0.00  loss 0.4750  min/max loss 0.0001/3.9094
+   steps 1231-1353 dead 0.01  loss 0.4911  min/max loss 0.0007/6.9189
+   steps 1354-1476 dead 0.00  loss 0.4204  min/max loss 0.0008/3.0402
+   relative weight change ||W - W0|| / ||W0||  (weight decay alone: 0.0716)
+     net.layers.0.layers.0.weight     0.7533
+     net.layers.1.layers.0.weight     2.2683
+     net.layers.2.layers.0.weight     2.2757
+     net.fc.weight                    1.2883
+   after training, eval mode on probe batches: dead 0.00, logit sd 1.840e+00
+
+2. TRAINING seed 9, published optimiser, 1486 steps
+   steps    1-123  dead 0.99  loss 0.6936  min/max loss 0.6931/0.7502
+   steps  124-246  dead 1.00  loss 0.6931  min/max loss 0.6931/0.6931
+   steps  247-369  dead 1.00  loss 0.6931  min/max loss 0.6931/0.6931
+   steps  370-492  dead 1.00  loss 0.6931  min/max loss 0.6931/0.6931
+   steps  493-615  dead 1.00  loss 0.6931  min/max loss 0.6931/0.6931
+   steps  616-738  dead 1.00  loss 0.6931  min/max loss 0.6931/0.6931
+   steps  739-861  dead 1.00  loss 0.6931  min/max loss 0.6931/0.6931
+   steps  862-984  dead 1.00  loss 0.6931  min/max loss 0.6931/0.6931
+   steps  985-1107 dead 1.00  loss 0.6931  min/max loss 0.6931/0.6931
+   steps 1108-1230 dead 1.00  loss 0.6931  min/max loss 0.6931/0.6931
+   steps 1231-1353 dead 1.00  loss 0.6931  min/max loss 0.6931/0.6931
+   steps 1354-1476 dead 1.00  loss 0.6931  min/max loss 0.6931/0.6931
+   relative weight change ||W - W0|| / ||W0||  (weight decay alone: 0.0716)
+     net.layers.0.layers.0.weight     0.1651
+     net.layers.1.layers.0.weight     0.8472
+     net.layers.2.layers.0.weight     0.5983
+     net.fc.weight                    0.1841
+   after training, eval mode on probe batches: dead 1.00, logit sd 0.000e+00

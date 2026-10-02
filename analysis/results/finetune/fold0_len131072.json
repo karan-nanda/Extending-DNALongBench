@@ -1,0 +1,38 @@
+{
+ "args": {
+  "fold": 0,
+  "epochs": 2,
+  "maxlen": 131072,
+  "accum": 8,
+  "lr": 0.0001,
+  "head_lr": 0.001,
+  "wd": 0.01,
+  "seed": 0,
+  "limit": 0,
+  "fasta": "data/eQTL/seqs/hg38.fa",
+  "out": "analysis/results/finetune"
+ },
+ "history": [
+  {
+   "refalt": 0.5429717190594633,
+   "ref_copy": 0.542895438707375,
+   "delta": 7.62803520882871e-05,
+   "n": 1212,
+   "n_pos": 593,
+   "epoch": 1,
+   "train_loss": 0.7294990983169822,
+   "epoch_sec": 16509.59179830551
+  },
+  {
+   "refalt": 0.5632296011354876,
+   "ref_copy": 0.563269103460676,
+   "delta": -3.950232518845631e-05,
+   "n": 1212,
+   "n_pos": 593,
+   "epoch": 2,
+   "train_loss": 0.7064484811990338,
+   "epoch_sec": 23244.948870897293
+  }
+ ],
+ "total_sec": 39754.543171167374
+}

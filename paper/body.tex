@@ -1,0 +1,583 @@
+\maketitle
+
+\begin{abstract}
+eQTL prediction (eQTLP) is the only variant task in DNALongBench
+\citep{cheng2025dnalongbench}, a standard benchmark for long-context DNA models.
+Ranking variants by distance to the transcription start site (TSS), with no
+training, reaches a mean test AUROC of 0.751, beating the expert model (0.681)
+and every foundation model (FM; 0.51--0.57). The test sets hold 11--34 positives
+per tissue, and every test gene also appears in training. We rebuild the task
+with distance-matched negatives and chromosome holdout, where hand-crafted local
+sequence features set a floor of 0.599. Scoring each pair again with the
+alternate allele replaced by the reference shows that no model uses the allele:
+for a CNN trained end to end and for frozen HyenaDNA and Caduceus, the swap
+changes AUROC by at most 0.0017, and all three fall below the floor. Fine-tuning
+HyenaDNA end to end over 3 folds does not change this: accuracy improves to the
+frozen probe's level while the allele gap stays at $|\Delta| \le 0.00016$. A nonlinear
+probe on the allele difference alone recovers only a weak trace (0.52--0.55). A
+single-nucleotide change moves the pooled FM embedding by about $10^{-4}$ of its
+norm, and the released FM eQTL code slices every input to length zero. On 652
+ClinVar pathogenic regulatory SNVs matched to benign SNVs, neither the embedding
+shift nor the transferred probe separates the classes (AUROC 0.49--0.51). We
+release the rebuilt task, the ablation harness, and the matched ClinVar set.
+\end{abstract}
+
+\section{Introduction}
+
+Long-context DNA models \citep{nguyen2023hyenadna,schiff2024caduceus,brixi2026evo2}
+are motivated by distal regulation, meaning variants that act on genes tens to
+hundreds of kilobases away. They inherit their architectures from long-convolution
+and state-space sequence models \citep{poli2023hyena,gu2023mamba}, and are
+benchmarked against expert models such as Enformer \citep{avsec2021enformer},
+Akita \citep{fudenberg2020akita} and Puffin \citep{dudnyk2024puffin}.
+DNALongBench \citep{cheng2025dnalongbench} evaluates HyenaDNA
+\citep{nguyen2023hyenadna} and Caduceus \citep{schiff2024caduceus} at up to
+450\,kb. Of its five tasks, only eQTLP involves a variant. Its model interface
+embeds the reference and alternate sequences, averages each, concatenates them,
+and classifies. A model can therefore succeed without distinguishing the alleles
+at all, if \emph{where} the variant sits predicts the label.
+
+We show that this is what happens. The published split rewards distance and gene
+identity. Once both are removed, three architectures score the same with and
+without the alternate allele. We contribute: (1) an audit of the published
+protocol; (2) \textbf{eQTLP-v2}, a distance-matched, chromosome-held-out version
+with a published floor; (3) a \textbf{ref-copy ablation} that any variant
+benchmark can report; (4) reproducibility findings on the released code; and (5)
+a matched, evaluation-only ClinVar regulatory set.
+
+\section{The published protocol rewards distance and memorisation}
+
+Positives are SuSiE \citep{wang2020susie} fine-mapped GTEx \citep{gtex2020} eQTLs
+in 9 tissues. Negatives are other variant--gene pairs within 450\,kb. Each input
+spans the variant and the TSS and is right-padded with N to 450\,kb. The split is
+a per-tissue random 8:1:1.
+
+\begin{itemize}
+\item \textbf{Distance beats every model.} Positives lie a median 8--33\,kb from
+the TSS, negatives 88--145\,kb. Scoring by $-$distance ($|$variant $-$ TSS$|$
+from the released coordinates, which is what the padded input encodes) gives a
+test AUROC of 0.688--0.828 per tissue, with a mean of 0.751 (Table~\ref{tab:published}).
+That beats the expert model in 7 of 9 tissues and every FM in every tissue. The
+padding also hands the distance to the model, since the number of N tokens
+encodes it.
+\ifdefined\RECOMB
+Scoring by the released \texttt{distance\_to\_tss} column instead --- which
+disagrees with the coordinates by over 1\,kb for 16\% of negatives and no
+positives --- gives 0.663: still above every FM, though not the expert.
+\fi
+\item \textbf{The test sets cannot rank models.} They hold 11--34 positives per
+tissue, giving AUROC CI half-widths of $\pm$0.10--0.18 \citep{hanley1982auc}, so
+no published FM result is distinguishable from 0.5. Nor is the split stratified:
+positive rates are 9--21\% in train, 3--5\% in test.
+\item \textbf{Train and test overlap.} Every test gene appears in training, and
+82--92\% of test pairs have a training variant within 100\,kb.
+\end{itemize}
+
+\ifdefined\RECOMB
+Table~\ref{tab:tissues} gives the per-tissue picture. The distance baseline is
+not winning on average while losing in places: it beats every foundation model in
+every one of the nine tissues, and the expert model in seven. The confidence
+intervals are the second half of the problem. With 11--34 positives a test AUROC
+carries a 95\% CI roughly 0.10--0.19 wide, so the published FM numbers
+(0.47--0.60 across tissues) are not separable from each other, from 0.5, or from
+the expert model. A benchmark cannot rank models at this sample size whatever the
+models do.
+\input{body_table_tissues}
+\fi
+
+\begin{table}[tb]
+\centering
+\caption{Published test AUROC (Table 7 of the benchmark paper), mean over 9
+tissues, next to our zero-training baseline. Per-tissue values with CIs are in
+Appendix~A.}
+\label{tab:published}
+\small
+\begin{tabular}{cccccc}
+\toprule
+Distance only & Expert (Enformer) & CNN & HyenaDNA & Caduceus-Ph & Caduceus-PS \\
+\midrule
+\textbf{0.751} & 0.681 & 0.528 & 0.514 & 0.566 & 0.538 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{eQTLP-v2}
+
+We pool the tissues into 25,600 unique pairs and drop 111 with conflicting
+labels. Each positive is matched to one negative on log distance to the TSS, on
+the same side of it, which gives 2,905 pairs and drops the distance-only AUROC to
+0.495. Folds are 5-fold with whole chromosomes held out, giving 570--665 test
+positives per fold. We also drop the published label-derived mask, which covers
+the positions of the positive eQTLs.
+
+Matching on distance removes real regulatory signal along with the shortcut,
+since enhancer--promoter distance genuinely predicts effect. We match anyway,
+because the task's stated aim is variant-effect prediction from sequence, and
+because the published input encodes distance in its padding, so a model can
+exploit it without reading any sequence. Unmatched results are in Appendix~B.
+
+On this configuration, gradient-boosted trees on local composition (GC, CpG,
+repeats and dinucleotides in windows up to 5\,kb) score $\mathbf{0.599 \pm
+0.031}$. Adding allele features changes this by at most 0.01. On the random
+split, a gene's training-set positive rate alone scores 0.70. That is the
+memorisation the published split allows.
+
+\ifdefined\RECOMB
+Table~\ref{tab:shortcuts} separates the two shortcuts by turning each off
+independently. Distance scores 0.790 whatever the split, because it does not care
+which genes are held out --- and 0.500 once negatives are matched on it. The
+gene prior behaves in the opposite way: 0.703 when genes recur across the split
+and 0.387 under chromosome holdout, which is below chance because a gene's
+training rate actively misleads on unseen chromosomes. The two are independent,
+which is why removing only one leaves the task solvable without reading sequence.
+
+The table also quantifies a third problem. The published label mask marks the
+positions of the positive eQTLs, so simply counting masked bases scores 0.780 on
+the unmatched task, above every published model. It falls to 0.436 once the
+positives are distance-matched, confirming it is a label leak rather than signal.
+We drop the mask in eQTLP-v2 for this reason.
+\input{body_table_shortcuts}
+\fi
+
+\section{No model uses the allele}
+
+\paragraph{Protocol.}
+\ifdefined\RECOMB
+The experiment is a controlled substitution. We score every variant twice with
+the same already-fitted model: once with its real alternate allele, and once with
+that allele overwritten by the reference base, so the two inputs differ at
+exactly one position and in nothing else. A model that reads the variant must
+give the two different scores. A model that is really scoring the variant's
+location will give the same score both times.
+
+Concretely, each model converts a sequence into a vector: it produces one
+internal state per base, and those states are averaged across all positions into
+a single summary vector $e$. The benchmark's own interface then concatenates the
+reference and alternate summaries and classifies the pair. We report three
+quantities from it:
+\begin{itemize}
+\item \refalt{} --- the test AUROC on the real pair $[e_{\mathrm{ref}},
+e_{\mathrm{alt}}]$;
+\item \refcopy{} --- \emph{the same fitted classifier}, nothing refitted, applied
+to $[e_{\mathrm{ref}}, e_{\mathrm{ref}}]$, so the alternate allele is gone;
+\item \diffonly{} --- a classifier trained only on the difference
+$e_{\mathrm{alt}} - e_{\mathrm{ref}}$, which asks whether the allele's effect is
+recoverable at all.
+\end{itemize}
+
+The models are the benchmark's \textbf{CNN} encoder, trained end to end with its
+collapsing logit ReLU repaired (\S\ref{sec:code}); and
+\textbf{HyenaDNA-medium-450k} \citep{nguyen2023hyenadna} (which reads sequence in
+one direction only, 6.55\,M parameters) and \textbf{Caduceus-Ph-131k}
+\citep{schiff2024caduceus} (which reads both directions, 7.73\,M). The latter two
+are used \emph{frozen}: their pretrained weights are never updated, and we fit
+only a logistic regression on top of the summary vectors they produce
+\citep{pedregosa2011sklearn} --- a \emph{linear probe}, in the
+representation-learning sense of that word rather than the molecular one. This is
+standard practice for asking what
+information a pretrained representation already contains, and we report below
+what happens when we instead fine-tune the whole network. Inputs are
+unpadded, and for each model we try both the published sequence orientation and
+its reverse complement.
+\else
+Each model embeds the reference and alternate sequences.
+The last-layer states are mean-pooled, and $[e_{\mathrm{ref}}, e_{\mathrm{alt}}]$
+is classified, as in the benchmark's Methods. We report three quantities:
+\refalt{}, the test AUROC; \refcopy{}, the same fitted classifier scoring
+$[e_{\mathrm{ref}}, e_{\mathrm{ref}}]$; and \diffonly{}, a classifier trained
+only on $e_{\mathrm{alt}} - e_{\mathrm{ref}}$. The models are the benchmark's
+\textbf{CNN} encoder, trained end to end with its collapsing logit ReLU repaired
+(\S\ref{sec:code}); and \textbf{HyenaDNA-medium-450k} \citep{nguyen2023hyenadna}
+(causal, 6.55\,M parameters) and \textbf{Caduceus-Ph-131k}
+\citep{schiff2024caduceus} (bidirectional, 7.73\,M), frozen, with a
+logistic-regression probe \citep{pedregosa2011sklearn}. Inputs are unpadded. For
+each FM we embed both the published orientation and its reverse complement.
+\fi
+
+
+\begin{itemize}
+\item \textbf{The allele changes nothing} (Figure~\ref{fig:one}a). Replacing it
+with the reference changes AUROC by at most 0.0017 for the trained CNN (15 runs)
+and 0.0006 for the FM probes, across probe strengths ($C = 0.001$--10), heads
+(linear, MLP), orientations, and 13 fold partitions (chromosome, gene and
+random). The paired 95\% CI is $[-0.0002, 0.0002]$.
+\item \textbf{Only a weak trace of the allele is there to find, and pooling is
+not what hides it.} A linear \diffonly{} probe scores at chance (0.49--0.51). An
+MLP on the difference beats a label-permutation null (Caduceus 0.54--0.55,
+HyenaDNA 0.52--0.53) but stays below the floor, and an MLP head on
+$[e_{\mathrm{ref}}, e_{\mathrm{alt}}]$, like the released Caduceus head, still
+has $\Delta = 0.0000$.
+
+Averaging over the whole sequence discards position, so we next ask whether the
+allele survives somewhere that average cannot reach. We repeat the search at
+every layer and over four \emph{summary windows} --- the set of positions
+averaged together before classifying: the whole sequence, $\pm$1\,kb around the
+variant, $\pm$64\,bp, and the single variant position itself. Each is scored
+against a control in which the variant is replaced by a base that did
+\textbf{not} occur, which absorbs anything attributable to local sequence context
+rather than to the allele. For HyenaDNA the control matches the signal
+everywhere (mean $-0.006$ over 36 cells), so what looked like allele information
+was context. For Caduceus one window survives its control --- the final layer at
+$\pm$1\,kb, scoring 0.575--0.580 against 0.545--0.553, on all three fold schemes.
+So a variant-centred summary does recover allele signal that whole-sequence
+averaging loses. It is still below the floor, and the swap still changes nothing
+even there (max $|\Delta|$ 0.017 over 104 cells, always favouring \refcopy{}).
+\item \textbf{All three models score below the hand-feature floor}
+(Figure~\ref{fig:one}a), in 10 of 10 random chromosome partitions. Only on the
+random split, which allows locus memorisation, do the FMs pass it (0.69--0.70 vs
+0.67).
+\end{itemize}
+
+\ifdefined\RECOMB
+Figure~\ref{fig:two} shows that search in full. Each cell is one layer read out
+one way, scored by how much a nonlinear probe on the allele difference beats the
+same probe on a control in which the variant is replaced by a base that never
+occurred. The control is what makes the comparison informative: it absorbs
+everything the probe could learn from local sequence context, so what remains is
+attributable to the allele itself. Three things are visible. HyenaDNA has no cell
+that clears its control, which is why we describe its trace as context rather
+than allele. Caduceus is warm in a band --- the $\pm$1\,kb and $\pm$64\,bp
+readouts, across most of the depth --- but almost all of it is within noise of
+the control. And exactly one cell stands clear, the final layer at $\pm$1\,kb,
+which replicates on all three fold schemes. That cell is the strongest
+allele-specific signal anywhere in either model, and at 0.575--0.580 it is still
+below the 0.599 hand-feature floor.
+
+\fi
+
+\begin{table}[tb]
+\centering
+\caption{eQTLP-v2, matched pairs, chromosome holdout. Mean per-fold test AUROC
+$\pm$ SD.}
+\label{tab:v2}
+\small
+\begin{tabular}{lcccc}
+\toprule
+Model & \refalt{} & \refcopy{} & $\Delta$ & \diffonly{} \\
+\midrule
+CNN (trained, 3 seeds $\times$ 5 folds) & 0.517 $\pm$ .040 & 0.517 & $-$0.0002 & --- \\
+HyenaDNA (frozen)    & 0.556 $\pm$ .031 & 0.556 $\pm$ .030 & $-$0.0001 & 0.495 $\pm$ .021 \\
+Caduceus-Ph (frozen) & 0.564 $\pm$ .021 & 0.564 $\pm$ .021 & 0.0000 & 0.507 $\pm$ .016 \\
+Local-composition floor & 0.599 $\pm$ .031 & & & \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{The SNP barely registers} (Figure~\ref{fig:one}b). The median relative
+shift $\|e_{\mathrm{alt}} - e_{\mathrm{ref}}\| / \|e_{\mathrm{ref}}\|$ is
+1.5--2.0 $\times 10^{-4}$ for HyenaDNA and $0.7 \times 10^{-4}$ for Caduceus.
+eQTLP-v2 is 92.3\% single-nucleotide substitutions and 7.7\% short indels or
+MNVs; restricting to the substitutions alone leaves both medians unchanged
+($1.52 \times 10^{-4}$ and $0.674 \times 10^{-4}$), so this is a per-variant
+effect and not an artifact of the indels. The
+CNN's max-pooled embedding changes in only 0.4--1.7\% of pairs. Two explanations
+for this fail.
+
+\ifdefined\RECOMB
+\paragraph{Orientation is not the cause.} HyenaDNA is causal, and the published
+orientation places the variant roughly 500\,bp from the end of the input, so in
+71--86\% of pairs only a few hundred positions can attend to it. This is a real
+defect of the protocol, and it is the obvious suspect. It is not the explanation.
+Embedding the reverse complement instead, so that the variant comes first and
+every subsequent position can see it, moves AUROC by less than 0.01 and leaves
+the \refcopy{} gap in the fourth decimal. Caduceus is bidirectional by
+construction and behaves identically to HyenaDNA throughout. A null that survives
+both reading orders, in both a causal and a bidirectional architecture, is not an
+artifact of where the variant sits in the window.
+
+\paragraph{Numerical precision is not the cause.} A relative shift of $10^{-4}$
+in bf16 invites the objection that the allele is being rounded away. We
+re-embedded 400 pairs in full fp32: the shifts reproduce, the difference vectors
+agree with their bf16 counterparts at cosine 0.89--0.95, and \diffonly{} stays at
+chance. The signal that a probe cannot find in bf16 is equally absent at full
+precision, so the model is not computing an allele effect that the numerics
+discard.
+
+\paragraph{What remains is pooling.} The substitution does move the
+representation, and locally it moves it a great deal: the variant-position hidden
+state changes by 37--112\%, the $\pm$64\,bp mean by 0.7--6.1\%, and the
+whole-sequence mean by only 0.006--0.09\%. Taking medians across layers, what
+reaches the classifier is about $1{,}000\times$ smaller than the change at the
+variant itself. Averaging across tens of kilobases is simply the wrong way to
+summarise a one-base question, and it is the summary the benchmark specifies.
+This is why we recommend summarising a window around the variant in
+\S\ref{sec:rec} --- but note the limit of that recommendation:
+Figure~\ref{fig:two} shows that even the best local window recovers only a signal
+that remains below the hand-feature floor.
+\else
+\textbf{Orientation:} HyenaDNA is causal, and in the published
+orientation most variants sit in the last 500\,bp; but reversing the input leaves
+AUROC unchanged, and bidirectional Caduceus behaves identically.
+\textbf{Precision:} re-embedding 400 pairs in fp32 gives the same shift
+(bf16--fp32 difference-vector cosine 0.89--0.95), and \diffonly{} stays at
+chance. What remains is pooling. The SNP moves the variant-position hidden state
+by 37--112\%, the $\pm$64\,bp mean by 0.7--6.1\%, and the whole-sequence mean by
+0.006--0.09\%: mean-pooling over tens of kilobases dilutes the substitution
+${\sim}1{,}000\times$.
+\fi
+
+\begin{figure}[!htb]
+\centering
+\ifdefined\RECOMB
+  \includegraphics[width=\linewidth]{figure1_wide.pdf}
+\else
+  \includegraphics[width=\linewidth]{figure1.pdf}
+\fi
+\caption{\textbf{(a)} eQTLP-v2, matched pairs, chromosome holdout: per-fold test
+AUROC for each model, scored normally (\refalt{}, filled) and with the reference
+copied over the alternate allele (\refcopy{}, open). Each fold's pair is joined
+by a line, and every line is vertical: the swap moves no score. Points are 5
+folds ($\times$ 3 seeds for the CNN); the bar is the mean. The dashed line is the
+floor on these same folds (0.593); \S3 quotes $0.599 \pm 0.031$, its mean over 7
+matchings $\times$ 10 partitions. No model reaches it. \textbf{(b)} Relative
+shift
+$\|e_{\mathrm{alt}} - e_{\mathrm{ref}}\| / \|e_{\mathrm{ref}}\|$ under four
+summary windows, from the variant position out to a whole-sequence average; markers are the
+median over layers, bands the min--max.}
+\label{fig:one}
+\end{figure}
+
+\ifdefined\RECOMB
+\begin{figure}[!htb]
+\centering
+\includegraphics[width=\linewidth]{figure2_wide.pdf}
+\caption{Allele signal by layer and summary window, for both frozen models. Colour is
+the gain of a nonlinear probe on $e_{\mathrm{alt}} - e_{\mathrm{ref}}$ over the
+same probe on a random-allele control, so 0 means the probe was reading local
+context rather than the variant. \textbf{F} is the pooled final-layer state.
+Warm cells concentrate in the local windows and only one (Caduceus, final layer,
+$\pm$1\,kb) clears its control by a margin; it is still below the floor, and the
+\refcopy{} swap changes nothing there.}
+\label{fig:two}
+\end{figure}
+\fi
+
+\paragraph{Fine-tuning does not change it.} The probes above are frozen, whereas
+the published numbers come from fine-tuning, so we fine-tuned
+HyenaDNA-medium-450k end to end on eQTLP-v2 --- backbone and head, through the
+benchmark's own mean-pooled readout --- for 2 epochs on each of 3 chromosome
+folds (33\,GPU-hours; inputs capped at 131\,kb, which 88\% of pairs fit
+entirely).
+
+\ifdefined\RECOMB
+Training works. Loss falls from 0.730 to 0.698, and \texttt{refalt} rises across
+epochs on 2 of the 3 folds (fold 0: 0.543$\to$0.563; fold 1: 0.565$\to$0.572;
+fold 2 regresses, 0.566$\to$0.529). The final-epoch mean is $0.555 \pm 0.023$,
+statistically indistinguishable from the frozen probe's $0.556 \pm 0.031$ and
+still below the 0.599 floor: updating every weight in the backbone buys nothing
+over a logistic regression on its frozen features.
+
+The allele gap does not move. Across all six epochs the largest $|\Delta|$ is
+\textbf{0.00016}, with a mean of $+0.00005$ --- the same fourth-decimal nothing
+the frozen probes gave. The model measurably improves at the task while learning
+nothing about which allele is present. This is the strongest form of the result
+we can offer: the null is not an artifact of freezing the backbone.
+
+\input{body_table_finetune}
+\else
+Training works --- loss falls 0.730$\to$0.698 and \refalt{} rises on 2 of 3
+folds --- and lands at $0.555 \pm 0.023$, indistinguishable from the frozen
+probe's $0.556 \pm 0.031$ and still below the floor. The allele gap does not
+move: across all six epochs the largest $|\Delta|$ is \textbf{0.00016}. The model
+improves at the task while learning nothing about which allele is present, so the
+null is not an artifact of freezing the backbone.
+\fi
+
+\paragraph{Scope and limitations.} The fine-tuning run is one model, one seed, 2
+epochs per fold at 131\,kb rather than the published 450\,kb, so it bounds what
+this much training achieves, not what any training could. We evaluate two models
+and both are small (6.55\,M and 7.73\,M parameters); larger long-context models
+such as Evo 2 \citep{brixi2026evo2} are beyond our compute. Our claim is
+therefore about what these architectures and this readout do on this task, not
+about model scale.
+
+\section{The released code does not run as shipped}
+\label{sec:code}
+
+\ifdefined\RECOMB
+We report defects found by reading the released code and running it on real
+records. We do not claim to have re-run the published experiments and obtained
+different numbers, which would be a different kind of result: with these defects
+the released code cannot produce the published FM numbers at all, so those
+numbers must come from a version that is not the one released. We raise this as
+a reproducibility problem for the artifact, not as a conclusion about what the
+original authors ran.
+\else
+We report defects found by reading and running the released code; we do not claim
+to have re-run the published experiments, since with these defects the released
+code cannot produce the published FM numbers at all.
+\fi
+
+\begin{itemize}
+\item \textbf{The FM eQTL loaders produce empty inputs.} Both the HyenaDNA and
+Caduceus loaders pad each input to 450,000 positions, then slice it with
+\texttt{[2028500:-2028500]}, leaving an empty array.
+\item \textbf{The token ids are wrong.} Without the slice, \texttt{argmax} over
+the one-hot gives ids 0--3, which are special tokens in the pretrained
+vocabularies.
+\item \textbf{The configs don't match the checkpoints.} They specify 2 layers,
+while the checkpoints have 8 and 16, and the pretrained-weights path is unset.
+\item \textbf{The CNN's training often collapses.} Its eQTLP head ends in a ReLU
+on the logits, so both logits can clamp to zero: the prediction is constant and
+every weight gets zero gradient. On the \emph{published} split, 2 of 10
+initialisations are dead before the first step, and after one epoch 5--6 of 10
+seeds output a constant score (AUROC exactly 0.5). The script sets no seed and
+evaluates the final-epoch model, not the best. The CNN is fed only the reference.
+\end{itemize}
+
+\section{Clinical evaluation set}
+
+\ifdefined\RECOMB
+ClinVar \citep{landrum2025clinvar} pathogenic or likely-pathogenic regulatory
+SNVs with at least 1 star, annotated against GENCODE \citep{gencode2025}, must be
+non-coding, over 50\,bp from a splice site, off every CDS, and outside small
+structural RNAs; 652 map to a gene TSS within 450\,kb. Each is matched to a
+benign SNV passing the same filters, on distance to the TSS and, where possible,
+the same gene and location class (555 of 652 pairs). No model is fitted on
+clinical labels, and the embedding shift, the transferred eQTLP-v2 probe and that
+probe's allele-only component are all at chance (AUROC 0.489--0.507 overall,
+0.49--0.52 on the 285 pairs with a 2-star-or-better pathogenic). The only stratum
+above chance is 5$'$UTR/promoter (0.53--0.57), where matching left pathogenic
+variants closer to the TSS (median 170 vs 450\,bp) and distance alone scores
+0.61. The same null therefore appears under pathogenicity labels; the two targets
+differ, so this corroborates the eQTL result rather than generalising it. The set
+is evaluation-only because too few regulatory positives survive the filters to
+train on (409 at 2 stars).
+
+The set is small and concentrated: a handful of well-studied genes contribute
+many pairs each. Appendix~F repeats the evaluation after dropping the three most
+frequent genes, after dropping the ten most frequent, and after keeping one pair
+per gene. Every score stays at chance, so the null is not an artifact of which
+genes ClinVar happens to have annotated densely.
+\else
+ClinVar \citep{landrum2025clinvar} pathogenic or likely-pathogenic regulatory
+SNVs with at least 1 star are filtered to non-coding variants over 50\,bp from a
+splice site, off every CDS and outside small structural RNAs; 652 map to a gene
+TSS within 450\,kb, each matched to a benign SNV passing the same filters on
+distance to the TSS and, where possible, gene and location class. No model is
+fitted on clinical labels, and the embedding shift, the transferred eQTLP-v2
+probe and its allele-only component are all at chance (0.489--0.507). The only
+stratum above chance is 5$'$UTR/promoter (0.53--0.57), where matching left
+pathogenic variants closer to the TSS and distance alone scores 0.61. The same
+null therefore appears under pathogenicity labels; the two targets differ, so
+this corroborates the eQTL result rather than generalising it.
+\fi
+
+\section{Relation to prior work}
+
+Two long-range DNA benchmarks are adjacent to ours: the Genomics Long-Range
+Benchmark \citep{kao2024lrb}, with an OMIM pathogenic non-coding variant task,
+and BEND \citep{marin2024bend}, on reference-sequence element annotation. Neither
+reports an allele ablation, the diagnostic we argue for: without it, a variant
+task can be passed by locating the variant rather than reading it. Our result
+also extends to a benchmark setting the finding that sequence-to-expression
+models predict individual expression variation poorly
+\citep{sasse2023benchmarking,huang2023personal}. The failure mode is shortcut
+learning \citep{geirhos2020shortcut}: the protocol, not the architecture, decides
+what a model must learn.
+
+\ifdefined\RECOMB
+\paragraph{Distance is a known baseline, not a surprise.} That genomic distance
+predicts enhancer--gene links is long established: the activity-by-contact model
+combines enhancer activity with contact frequency, which falls off steeply with
+distance, and outperforms many sequence-based predictors of which enhancer
+regulates which gene \citep{fulco2019abc}. The finding here is therefore not that
+distance is informative --- it is that a benchmark advertised as measuring
+variant-effect prediction from sequence can be won by distance alone, and that
+none of the evaluated models beats it. A field that already knows distance is
+strong should be reporting it as a baseline.
+
+\paragraph{Perturbation data avoids the fine-mapping confound.} Our labels are
+statistically fine-mapped eQTLs, which inherit the confounding structure of
+linkage disequilibrium: the credible set marks variants correlated with an
+expression effect, not necessarily the causal one. CRISPR interference screens
+that perturb candidate elements directly and read out expression
+\citep{gasperini2019,schraivogel2020} give element--gene links that do not
+depend on fine-mapping assumptions, and they are a better foundation for a
+variant benchmark than association statistics are --- though they test elements
+rather than single bases, so they do not by themselves solve the allele problem
+we identify.
+
+\paragraph{Model scale.} We evaluate two small models. Larger genomic foundation
+models exist --- Nucleotide Transformer \citep{dallatorre2025nt} at up to 2.5\,B
+parameters, Evo 2 \citep{brixi2026evo2} at 7\,B and 40\,B --- and we have not
+tested whether scale changes the picture. Two considerations cut against
+assuming it does. The pooled readout that dilutes the substitution
+${\sim}1{,}000\times$ is a property of the interface, not the backbone, so a
+larger backbone read out the same way inherits the same dilution. And
+pretraining on a single reference genome provides no objective that rewards
+distinguishing alleles at a locus, whatever the parameter count. Neither
+argument is a substitute for running the experiment.
+\fi
+
+\ifdefined\RECOMB
+\section{Discussion}
+
+\paragraph{What this does and does not show.} It shows that DNALongBench's eQTL
+task, as published, can be passed without reading the alternate allele, and that
+three architectures do exactly that. It does not show that long-context DNA
+models are incapable of variant-effect prediction. The distinction matters
+because the two conclusions call for different responses: the first is a
+protocol that needs fixing, the second would be an architectural verdict we have
+no basis to issue. Our evidence is two frozen models of 6.55\,M and 7.73\,M
+parameters plus one CNN trained end to end, on one task, under the benchmark's
+own readout. A larger model, a variant-aware readout, or a training signal that
+rewards allele discrimination could all change the result --- and the fact that
+none of them has been tested is a gap in the field, not a settled question.
+
+\paragraph{Why a protocol can hide this.} The failure is legible only because we
+looked for it. A benchmark reports one number per model, and 0.566 for
+Caduceus-Ph is unremarkable: neither so high as to invite an audit nor so low as
+to suggest the task is broken. Nothing in that number reveals that a
+zero-training distance baseline scores 0.751 on the same split, that the test set
+holds 27 positives, or that replacing the alternate allele with the reference
+leaves the score unchanged. Each of those is a cheap check. None is standard.
+
+\paragraph{The ablation generalises past this task.} The \refcopy{} construction
+needs no retraining and no new data: take the fitted model, feed it an input in
+which the quantity under test has been neutralised, and score again. It applies
+wherever a benchmark claims a model responds to a specific perturbation --- a
+variant, an edit, a knockout, a designed mutation. We think a variant benchmark
+that does not report it has not established that its models read variants, and
+that the burden should sit with the benchmark rather than with whoever audits it
+afterwards.
+
+\paragraph{On the value of floors.} The hand-feature floor did more diagnostic
+work here than any model comparison. A floor of 0.599 from GC content, CpG
+density, repeats and dinucleotide frequencies is not a strong result; what makes
+it useful is that three deep models fail to reach it. Model-versus-model tables
+cannot produce that observation, because every entry can be mediocre together.
+Publishing a floor costs a few CPU-hours and converts an unremarkable
+leaderboard into a falsifiable claim.
+\fi
+
+\section{Recommendations}
+\label{sec:rec}
+
+Variant benchmarks for long-context models should match negatives on distance to
+the TSS and, where possible, gene; hold out chromosomes; size test sets for
+$\pm$0.05 CIs; publish a hand-feature floor; report a \textbf{ref-copy ablation}
+beside every variant score; and read the variant out \emph{locally} rather than
+as a whole-input mean.
+
+On DNALongBench's eQTL task, current models learn where a variant is, not what it
+is.
+
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+\ifdefined\RECOMB
+\section*{Appendix}
+\noindent Appendices A--F are submitted as Supplementary Material
+(\texttt{appendix.pdf}).
+\else
+\appendix
+\section*{Appendix}
+\noindent
+\textbf{A} per-tissue Table~\ref{tab:published} with CIs, test-set sizes and
+overlap statistics; \textbf{B} eQTLP-v2 construction and the full baseline grid
+(random, gene and chromosome holdout; all vs matched); \textbf{C} per-fold
+ablation results, results by orientation, and the fp32 check; \textbf{D} the CNN
+collapse analysis; \textbf{E} the released-code defects with file and line
+references; \textbf{F} clinical-set construction and results by stratum.
+\fi

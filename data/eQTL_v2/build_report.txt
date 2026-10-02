@@ -1,0 +1,23 @@
+eQTLP-v2 build  |  source data\eQTL  |  caliper 0.05  |  seed 0
+pooled pairs: 25,600 (3,254 positive); dropped 111 tissue-conflicting pairs
+matched pairs: 5,810 (2,905 positive, 349 positives unmatched)
+genes: 1,222  gene groups (shared variants merged): 861  largest group: 5664 pairs
+
+distance-only AUROC (score = -distance; 0.5 = no distance signal)
+  all      0.790   median kb pos/neg: 16.6 / 114.0
+  matched  0.500   median kb pos/neg: 21.2 / 21.2
+
+folds: positives per fold (all | matched)
+  random  [651, 651, 651, 651, 650]  |  [585, 578, 588, 571, 583]
+  gene    [652, 650, 651, 650, 651]  |  [572, 586, 591, 582, 574]
+  chrom   [664, 640, 630, 655, 665]  |  [593, 570, 581, 568, 593]
+
+train->test leakage, mean over folds (fraction of test pairs; all version)
+  scheme      gene  variant  locus100kb
+  random     1.000    0.280       0.967
+  gene       0.000    0.000       0.148
+  chrom      0.000    0.000       0.000
+
+chromosome folds: f0=chr1,chrX,chr10,chr14,chr18; f1=chr5,chr12,chr19,chr20; f2=chr3,chr4,chr15,chr16; f3=chr7,chr8,chr9,chr11,chr13; f4=chr2,chr6,chr17,chr21,chr22
+
+written: data\eQTL_v2\pairs.tsv

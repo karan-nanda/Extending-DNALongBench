@@ -1,0 +1,26 @@
+% =====================================================================
+%  RECOMB build -- 10 pages, 1in margins, bibliography excluded.
+%
+%  Per the RECOMB 2026 CFP (recomb.org/recomb2026/call_for_papers.html):
+%    "10 pages (Letter or A4 format), including all figures/tables and their
+%     captions, using a minimum font size of 10pt and 1-inch margins."
+%    A title page is additional; the bibliography does not count; an Appendix
+%    may be submitted as separate Supplementary Material with no page limit.
+%
+%  The appendix therefore lives in appendix.tex and is built separately --
+%  it is NOT included here. Build both:
+%      latexmk -pdf recomb.tex
+%      latexmk -pdf appendix.tex
+%
+%  Shares body.tex with workshop.tex; \RECOMB switches the long-form passages.
+% =====================================================================
+
+\documentclass[10pt]{article}
+\usepackage[letterpaper,margin=1in]{geometry}
+\def\RECOMB{1}
+
+\input{preamble}
+
+\begin{document}
+\input{body}
+\end{document}

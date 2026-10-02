@@ -1,0 +1,7 @@
+sizes: train=3537 (pos 1756), valid=1190 (pos 568), test=1083 (pos 581)
+[matched_chrom_f2_refalt_s0] epoch 1  train loss 0.7056 auroc 0.493  |  valid auroc 0.531  |  3.8 min, peak 2.6 GB
+[matched_chrom_f2_refalt_s0] epoch 2  train loss 0.6957 auroc 0.513  |  valid auroc 0.492  |  3.6 min, peak 2.6 GB
+[matched_chrom_f2_refalt_s0] epoch 3  train loss 0.6933 auroc 0.540  |  valid auroc 0.498  |  3.6 min, peak 2.6 GB
+[matched_chrom_f2_refalt_s0] epoch 4  train loss 0.6944 auroc 0.527  |  valid auroc 0.516  |  3.6 min, peak 2.6 GB
+[matched_chrom_f2_refalt_s0] epoch 5  train loss 0.6918 auroc 0.543  |  valid auroc 0.488  |  6.4 min, peak 2.6 GB
+[matched_chrom_f2_refalt_s0] TEST auroc 0.502  auprc 0.525  (best valid 0.531)

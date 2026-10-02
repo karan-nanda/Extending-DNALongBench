@@ -1,0 +1,27 @@
+% =====================================================================
+%  Workshop build -- 4 pages of body, venue-neutral.
+%
+%  Target: an ICLR workshop (MLGenX, GEM) or NeurIPS MLCB. This compiles as-is
+%  with a stock TeX Live / MiKTeX install; to drop it into a venue template,
+%  replace the \usepackage{geometry} line below with the venue's style file:
+%
+%    ICLR workshop:   \usepackage{iclr2026_conference,times}  (+ \iclrfinalcopy)
+%    NeurIPS:         \usepackage[final]{neurips_2025}
+%    ICML:            \usepackage[accepted]{icml2026}
+%
+%  and delete the title-block overrides in preamble.tex (marked [VENUE]),
+%  which exist only to claw back space article's defaults waste.
+%
+%  Shares body.tex with recomb.tex. Without \RECOMB defined, body.tex drops the
+%  long-form passages and keeps the body to 4 pages.
+%      latexmk -pdf workshop.tex
+% =====================================================================
+
+\documentclass[10pt]{article}
+\usepackage[letterpaper,textwidth=5.5in,textheight=9in,centering]{geometry}
+
+\input{preamble}
+
+\begin{document}
+\input{body}
+\end{document}

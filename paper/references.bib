@@ -1,0 +1,247 @@
+% Verified 2026-09-20 against publisher pages / proceedings listings.
+% Keys are used in paper/workshop_draft.md and paper/draft.md.
+
+% ---------- the benchmark under audit ----------
+@article{cheng2025dnalongbench,
+  title   = {{DNALONGBENCH}: a benchmark suite for long-range {DNA} prediction tasks},
+  author  = {Cheng, Wenduo and Song, Zhenqiao and Zhang, Yang and Wang, Shike and Wang, Danqing and Yang, Muyu and Li, Lei and Ma, Jian},
+  journal = {Nature Communications},
+  volume  = {16},
+  pages   = {10108},
+  year    = {2025},
+  doi     = {10.1038/s41467-025-65077-4}
+}
+
+% ---------- the models evaluated ----------
+@inproceedings{nguyen2023hyenadna,
+  title     = {{HyenaDNA}: Long-range genomic sequence modeling at single nucleotide resolution},
+  author    = {Nguyen, Eric and Poli, Michael and Faizi, Marjan and Thomas, Armin and Birch-Sykes, Callum and Wornow, Michael and Patel, Aman and Rabideau, Clayton and Massaroli, Stefano and Bengio, Yoshua and Ermon, Stefano and Baccus, Stephen A. and R{\'e}, Christopher},
+  booktitle = {Advances in Neural Information Processing Systems},
+  volume    = {36},
+  pages     = {43177--43201},
+  year      = {2023}
+}
+
+@inproceedings{schiff2024caduceus,
+  title     = {Caduceus: Bi-directional equivariant long-range {DNA} sequence modeling},
+  author    = {Schiff, Yair and Kao, Chia-Hsiang and Gokaslan, Aaron and Dao, Tri and Gu, Albert and Kuleshov, Volodymyr},
+  booktitle = {Proceedings of the 41st International Conference on Machine Learning},
+  series    = {PMLR},
+  volume    = {235},
+  year      = {2024},
+  eprint    = {2403.03234}
+}
+
+@inproceedings{poli2023hyena,
+  title     = {Hyena hierarchy: Towards larger convolutional language models},
+  author    = {Poli, Michael and Massaroli, Stefano and Nguyen, Eric and Fu, Daniel Y. and Dao, Tri and Baccus, Stephen and Bengio, Yoshua and Ermon, Stefano and R{\'e}, Christopher},
+  booktitle = {Proceedings of the 40th International Conference on Machine Learning},
+  year      = {2023},
+  eprint    = {2302.10866}
+}
+
+@article{gu2023mamba,
+  title   = {Mamba: Linear-time sequence modeling with selective state spaces},
+  author  = {Gu, Albert and Dao, Tri},
+  journal = {arXiv preprint arXiv:2312.00752},
+  year    = {2023}
+}
+
+% ---------- expert models used by the benchmark ----------
+@article{avsec2021enformer,
+  title   = {Effective gene expression prediction from sequence by integrating long-range interactions},
+  author  = {Avsec, {\v{Z}}iga and Agarwal, Vikram and Visentin, Daniel and Ledsam, Joseph R. and Grabska-Barwinska, Agnieszka and Taylor, Kyle R. and Assael, Yannis and Jumper, John and Kohli, Pushmeet and Kelley, David R.},
+  journal = {Nature Methods},
+  volume  = {18},
+  pages   = {1196--1203},
+  year    = {2021},
+  doi     = {10.1038/s41592-021-01252-x}
+}
+
+@article{fudenberg2020akita,
+  title   = {Predicting 3{D} genome folding from {DNA} sequence with {Akita}},
+  author  = {Fudenberg, Geoff and Kelley, David R. and Pollard, Katherine S.},
+  journal = {Nature Methods},
+  volume  = {17},
+  pages   = {1111--1117},
+  year    = {2020},
+  doi     = {10.1038/s41592-020-0958-x}
+}
+
+@article{dudnyk2024puffin,
+  title   = {Sequence basis of transcription initiation in the human genome},
+  author  = {Dudnyk, Kseniia and Cai, Donghong and Shi, Chenlai and Xu, Jian and Zhou, Jian},
+  journal = {Science},
+  volume  = {384},
+  number  = {6694},
+  year    = {2024},
+  doi     = {10.1126/science.adj0116}
+}
+
+@article{fulco2019abc,
+  title   = {Activity-by-contact model of enhancer--promoter regulation from thousands of {CRISPR} perturbations},
+  author  = {Fulco, Charles P. and Nasser, Joseph and Jones, Thouis R. and Munson, Glen and Bergman, Drew T. and Subramanian, Vidya and Grossman, Sharon R. and Anyoha, Rockwell and Doughty, Benjamin R. and Patwardhan, Tejal A. and Nguyen, Tung H. and Kane, Michael and Perez, Elizabeth M. and Durand, Neva C. and Lareau, Caleb A. and Stamenova, Elena K. and Aiden, Erez Lieberman and Lander, Eric S. and Engreitz, Jesse M.},
+  journal = {Nature Genetics},
+  volume  = {51},
+  pages   = {1664--1669},
+  year    = {2019},
+  doi     = {10.1038/s41588-019-0538-0}
+}
+
+% ---------- other long-range DNA benchmarks ----------
+@inproceedings{kao2024lrb,
+  title     = {Advancing {DNA} language models: The genomics long-range benchmark},
+  author    = {Kao, Chia-Hsiang and Trop, Evan and Polen, McKinley and Schiff, Yair and de Almeida, Bernardo P. and Gokaslan, Aaron and Pierrot, Thomas and Kuleshov, Volodymyr},
+  booktitle = {ICLR 2024 Workshop on Machine Learning for Genomics Explorations},
+  year      = {2024}
+}
+
+@inproceedings{marin2024bend,
+  title     = {{BEND}: Benchmarking {DNA} language models on biologically meaningful tasks},
+  author    = {Marin, Frederikke Isa and Teufel, Felix and Horlacher, Marc and Madsen, Dennis and Pultz, Dennis and Winther, Ole and Boomsma, Wouter},
+  booktitle = {The Twelfth International Conference on Learning Representations (ICLR)},
+  year      = {2024},
+  eprint    = {2311.12570}
+}
+
+% ---------- models excluded by the benchmark, cited in passing ----------
+@article{dallatorre2025nt,
+  title   = {Nucleotide {Transformer}: building and evaluating robust foundation models for human genomics},
+  author  = {Dalla-Torre, Hugo and Gonzalez, Liam and Mendoza-Revilla, Javier and Lopez Carranza, Nicolas and Henryk Grzywaczewski, Adam and Oteri, Francesco and Dallago, Christian and Trop, Evan and de Almeida, Bernardo P. and Sirelkhatim, Hassan and Richard, Guillaume and Skwark, Marcin and Beguir, Karim and Lopez, Marie and Pierrot, Thomas},
+  journal = {Nature Methods},
+  volume  = {22},
+  pages   = {287--297},
+  year    = {2025},
+  doi     = {10.1038/s41592-024-02523-z}
+}
+
+@article{brixi2026evo2,
+  title   = {Genome modelling and design across all domains of life with {Evo 2}},
+  author  = {Brixi, Garyk and others},
+  journal = {Nature},
+  volume  = {652},
+  number  = {8112},
+  pages   = {1349--1361},
+  year    = {2026},
+  doi     = {10.1038/s41586-026-10176-5}
+}
+
+% ---------- prior evidence that sequence models miss variant effects ----------
+@article{sasse2023benchmarking,
+  title   = {Benchmarking of deep neural networks for predicting personal gene expression from {DNA} sequence highlights shortcomings},
+  author  = {Sasse, Alexander and Ng, Bernard and Spiro, Anna E. and Tasaki, Shinya and Bennett, David A. and Gaiteri, Christopher and De Jager, Philip L. and Chikina, Maria and Mostafavi, Sara},
+  journal = {Nature Genetics},
+  volume  = {55},
+  pages   = {2060--2064},
+  year    = {2023},
+  doi     = {10.1038/s41588-023-01524-6}
+}
+
+@article{huang2023personal,
+  title   = {Personal transcriptome variation is poorly explained by current genomic deep learning models},
+  author  = {Huang, Connie and Shuai, Richard W. and Baokar, Parth and Chung, Ryan and Rastogi, Ruchir and Kathail, Pooja and Ioannidis, Nilah M.},
+  journal = {Nature Genetics},
+  volume  = {55},
+  number  = {12},
+  pages   = {2056--2059},
+  year    = {2023},
+  doi     = {10.1038/s41588-023-01574-w}
+}
+
+@article{geirhos2020shortcut,
+  title   = {Shortcut learning in deep neural networks},
+  author  = {Geirhos, Robert and Jacobsen, J{\"o}rn-Henrik and Michaelis, Claudio and Zemel, Richard and Brendel, Wieland and Bethge, Matthias and Wichmann, Felix A.},
+  journal = {Nature Machine Intelligence},
+  volume  = {2},
+  pages   = {665--673},
+  year    = {2020},
+  doi     = {10.1038/s42256-020-00257-z}
+}
+
+% ---------- data sources ----------
+@article{gtex2020,
+  title   = {The {GTEx} Consortium atlas of genetic regulatory effects across human tissues},
+  author  = {{The GTEx Consortium}},
+  journal = {Science},
+  volume  = {369},
+  number  = {6509},
+  pages   = {1318--1330},
+  year    = {2020},
+  doi     = {10.1126/science.aaz1776}
+}
+
+@article{wang2020susie,
+  title   = {A simple new approach to variable selection in regression, with application to genetic fine mapping},
+  author  = {Wang, Gao and Sarkar, Abhishek and Carbonetto, Peter and Stephens, Matthew},
+  journal = {Journal of the Royal Statistical Society: Series B},
+  volume  = {82},
+  number  = {5},
+  pages   = {1273--1300},
+  year    = {2020},
+  doi     = {10.1111/rssb.12388}
+}
+
+@article{landrum2025clinvar,
+  title   = {{ClinVar}: updates to support classifications of both germline and somatic variants},
+  author  = {Landrum, Melissa J. and Lee, Erin and Kochhar, Shailja and Alsheikh, Hadeer and Alvarado, Sara and Ashra, Maryam and Chao, Cecilia and Chitipiralla, Shanmuga and Gu, Baoshan and Hart, Jeffrey and others},
+  journal = {Nucleic Acids Research},
+  volume  = {53},
+  number  = {D1},
+  pages   = {D1313--D1321},
+  year    = {2025},
+  doi     = {10.1093/nar/gkae1090}
+}
+
+@article{gencode2025,
+  title   = {{GENCODE} 2025: reference gene annotation for human and mouse},
+  author  = {{The GENCODE Consortium}},
+  journal = {Nucleic Acids Research},
+  volume  = {53},
+  number  = {D1},
+  pages   = {D966--D975},
+  year    = {2025},
+  doi     = {10.1093/nar/gkae1078}
+}
+
+% ---------- CRISPRi screens behind the ETGP task ----------
+@article{gasperini2019,
+  title   = {A genome-wide framework for mapping gene regulation via cellular genetic screens},
+  author  = {Gasperini, Molly and Hill, Andrew J. and McFaline-Figueroa, Jos{\'e} L. and Martin, Beth and Kim, Seungsoo and Zhang, Melissa D. and Jackson, Dana and Leith, Anh and Schreiber, Jacob and Noble, William S. and Trapnell, Cole and Ahituv, Nadav and Shendure, Jay},
+  journal = {Cell},
+  volume  = {176},
+  number  = {1-2},
+  pages   = {377--390},
+  year    = {2019},
+  doi     = {10.1016/j.cell.2018.11.029}
+}
+
+@article{schraivogel2020,
+  title   = {Targeted {Perturb-seq} enables genome-scale genetic screens in single cells},
+  author  = {Schraivogel, Daniel and Gschwind, Andreas R. and Milbank, Jennifer H. and Leonce, Daniel R. and Jakob, Petra and Mathur, Lukas and Korbel, Jan O. and Merten, Christoph A. and Velten, Lars and Steinmetz, Lars M.},
+  journal = {Nature Methods},
+  volume  = {17},
+  pages   = {629--635},
+  year    = {2020},
+  doi     = {10.1038/s41592-020-0837-5}
+}
+
+% ---------- methods ----------
+@article{hanley1982auc,
+  title   = {The meaning and use of the area under a receiver operating characteristic ({ROC}) curve},
+  author  = {Hanley, James A. and McNeil, Barbara J.},
+  journal = {Radiology},
+  volume  = {143},
+  number  = {1},
+  pages   = {29--36},
+  year    = {1982},
+  doi     = {10.1148/radiology.143.1.7063747}
+}
+
+@article{pedregosa2011sklearn,
+  title   = {Scikit-learn: Machine learning in {Python}},
+  author  = {Pedregosa, Fabian and Varoquaux, Ga{\"e}l and Gramfort, Alexandre and Michel, Vincent and Thirion, Bertrand and Grisel, Olivier and Blondel, Mathieu and Prettenhofer, Peter and Weiss, Ron and Dubourg, Vincent and Vanderplas, Jake and Passos, Alexandre and Cournapeau, David and Brucher, Matthieu and Perrot, Matthieu and Duchesnay, {\'E}douard},
+  journal = {Journal of Machine Learning Research},
+  volume  = {12},
+  pages   = {2825--2830},
+  year    = {2011}
+}

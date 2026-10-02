@@ -1,0 +1,8 @@
+sizes: train=3774 (pos 1754), valid=1083 (pos 581), test=953 (pos 570)
+[matched_chrom_f1_refalt_s2] epoch 1  train loss 0.7000 auroc 0.500  |  valid auroc 0.520  |  3.7 min, peak 2.6 GB
+[matched_chrom_f1_refalt_s2] epoch 2  train loss 0.6949 auroc 0.493  |  valid auroc 0.574  |  3.5 min, peak 2.6 GB
+[matched_chrom_f1_refalt_s2] epoch 3  train loss 0.6934 auroc 0.498  |  valid auroc 0.519  |  3.5 min, peak 2.6 GB
+[matched_chrom_f1_refalt_s2] epoch 4  train loss 0.6923 auroc 0.513  |  valid auroc 0.501  |  3.5 min, peak 2.6 GB
+[matched_chrom_f1_refalt_s2] epoch 5  train loss 0.6909 auroc 0.524  |  valid auroc 0.511  |  3.5 min, peak 2.6 GB
+[matched_chrom_f1_refalt_s2] TEST auroc 0.486  auprc 0.589  (best valid 0.574)
+[matched_chrom_f1_refalt_s2] TEST-TIME ABLATION (same weights): alt 0.4861  ref_copy 0.4855  random_allele 0.4862  frac_embedding_changed 0.0063  median_max_abs_diff 0.0000

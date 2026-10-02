@@ -1,0 +1,28 @@
+# local notes / tooling
+.claude/
+RESUME_HERE.md
+__pycache__/
+
+# upstream benchmark clone (see README for commit)
+DNALONGBENCH/
+
+# raw third-party downloads (see README)
+clinvar.vcf.gz
+variant_summary.txt.gz
+gencode.v50.annotation.gtf.gz
+data/eQTL/
+data/models/
+
+# regenerable model embeddings
+data/**/*_emb/
+
+# LaTeX build artefacts (PDFs are kept)
+paper/*.aux
+paper/*.bbl
+paper/*.blg
+paper/*.fdb_latexmk
+paper/*.fls
+paper/*.log
+paper/*.out
+paper/*.toc
+paper/*.synctex.gz
