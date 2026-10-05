@@ -54,16 +54,24 @@ bash analysis/caduceus_env_setup.sh          # venv at ~/cad; set CAD_ENV to cha
 
 File and line references for each defect are in Appendix E.
 
-## Tier 3: probes on our frozen embeddings, CPU, no GPU needed
+## Tier 3: probes on our frozen embeddings, CPU only, ~20 min plus R6
 
 `bash fetch_data.sh --embeddings` downloads the embeddings (~950 MB) from the
 [`data-v1` release](https://github.com/karan-nanda/Extending-DNALongBench/releases/tag/data-v1).
 To compute them yourself instead, see Tier 4.
 
+Probe results do not reproduce bit for bit across machines, because BLAS threading changes
+floating-point summation order. On a fresh Linux rerun of R4 and R4b, the logistic AUROCs moved
+by at most 0.0003 and the MLP AUROCs by up to 0.006 (0.015 for the `|e_alt − e_ref|` MLP).
+Δ stayed at zero and every FM stayed below the floor. The one borderline number is the
+HyenaDNA chromosome-fold permutation test in R4b: p = 0.095 in the committed run and
+p = 0.048 on the rerun. With 20 permutations, 0.048 is the smallest possible p, and the
+paper reports the range.
+
 | Claim | Command | Expected | Writes |
 |---|---|---|---|
-| Frozen FMs fall below the floor, and replacing alt by ref changes nothing (§4, Table 4; R4) | `python analysis/robust_eqtl_v2.py --part R4` | max \|Δ\| ≤ 0.0006; HyenaDNA 0.556, Caduceus 0.564 on chrom folds; both below the floor in 10/10 partitions | `analysis/results/robustness/R4_probes.tsv` |
-| A nonlinear (MLP) head on [e_ref, e_alt] gives the allele zero weight; permutation null on the difference (R4b) | `python analysis/robust_nonlinear.py` | MLP head Δ = 0.0000 in all 4 settings | `analysis/results/robustness/R4b_nonlinear.tsv` |
+| Frozen FMs fall below the floor, and replacing alt by ref changes nothing (§4, Table 4; R4) | `python analysis/robust_eqtl_v2.py --part R4` (~6 min) | max \|Δ\| ≤ 0.0006; HyenaDNA 0.556, Caduceus 0.564 on chrom folds; both below the floor in 10/10 partitions | `analysis/results/robustness/R4_probes.tsv` |
+| A nonlinear (MLP) head on [e_ref, e_alt] gives the allele zero weight; permutation null on the difference (R4b) | `python analysis/robust_nonlinear.py` (~11 min) | MLP head Δ = 0.0000 in all 4 settings; difference probe above its permutation null (p = 0.048) | `analysis/results/robustness/R4b_nonlinear.tsv` |
 | Every layer × readout (whole / ±1 kb / ±64 bp / variant position), with a random-allele control; Figure 2 (§4, R6) | `python analysis/variant_window_probe.py` | max \|Δ\| 0.013 (HyenaDNA), 0.0165 (Caduceus); one real cell: Caduceus final layer ±1 kb, 0.580 vs 0.545 control | `analysis/results/robustness/R6_variant_window.tsv` |
 | Figure 1 | `python analysis/figure1_data.py && python analysis/figure1_plot.py && python analysis/figure1_plot.py --width 6.5` | per-fold refalt = ref_copy | `analysis/results/robustness/F1_per_fold.tsv`, `paper/figures/figure1*.pdf` |
 | Clinical set: all scores at chance (§6, R9) | `python analysis/clinical_score.py` | every AUROC 0.47–0.51 | `data/clinical/clinical_scores.tsv` |

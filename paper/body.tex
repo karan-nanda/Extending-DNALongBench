@@ -204,8 +204,8 @@ and 0.0006 for the FM probes, across probe strengths ($C = 0.001$--10), heads
 random). The paired 95\% CI is $[-0.0002, 0.0002]$.
 \item \textbf{Only a weak trace of the allele is there to find, and pooling is
 not what hides it.} A linear \diffonly{} probe scores at chance (0.49--0.51). An
-MLP on the difference beats a label-permutation null (Caduceus 0.54--0.55,
-HyenaDNA 0.52--0.53) but stays below the floor, and an MLP head on
+MLP on the difference scores at or above a 20-permutation label null ($p$ =
+0.048--0.095; Caduceus 0.53--0.55, HyenaDNA 0.52--0.53) but stays below the floor, and an MLP head on
 $[e_{\mathrm{ref}}, e_{\mathrm{alt}}]$, like the released Caduceus head, still
 has $\Delta = 0.0000$.
 
