@@ -20,6 +20,11 @@
 \large Long-context DNA models do not use the allele:\\
 an audit of DNALongBench's eQTL task}
 
+% The main text cites Appendices A--F; S-prefixed floats avoid clashing with its Tables 1--5.
+\renewcommand{\thesection}{\Alph{section}}
+\renewcommand{\thetable}{S\arabic{table}}
+\renewcommand{\thefigure}{S\arabic{figure}}
+
 \begin{document}
 \maketitle
 
