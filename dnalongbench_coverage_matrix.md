@@ -606,6 +606,18 @@ Each claim was re-tested for a single-run artefact. Results are in `analysis/res
 
 **Shift by pooling (median ‖alt − ref‖/‖ref‖):** whole sequence 0.0001–0.0009, ±64 bp 0.007–0.067, variant position 0.37–1.12. Both models represent the substituted base locally; mean-pooling over tens of kilobases dilutes it by ~1,000×.
 
+**R10, fresh-clone reproduction (2026-10-05).** We cloned the public repo into clean Linux
+(WSL2 Ubuntu 24.04, new Python 3.12 venv from `requirements.txt`) and fetched every input with
+`fetch_data.sh`, with every MD5 passing. The following reproduce exactly: `eqtl_leakage`,
+`robust_published` (0.663 / 0.752 / 0.750), `build_eqtl_v2` (`pairs.tsv` byte-identical),
+`eqtl_v2_baselines` (differences only at 1e-16), released loaders R5 (shape `(0,)` in both
+repos), the R7 CNN init table (digit-identical), and the R6 gradient-boosted probes (headline
+numbers unchanged). Logistic probes and Δ move by ≤ 3e-4, MLP probes by ≤ 0.006 (0.015 for
+the |diff| MLP), and clinical subgroup AUROCs by ≤ 0.005. **One claim was narrowed:** the
+HyenaDNA/chrom R4b permutation p moved from 0.095 to 0.048, and Caduceus/gene MLP-diff from
+0.538 to 0.535, so the paper now says "at or above a 20-permutation null (p = 0.048–0.095;
+Caduceus 0.53–0.55)".
+
 ### 14.1 What R6 changes about the claim
 
 1. **The benchmark's readout never uses the allele.** Across 104 layer × pooling cells and both models, swapping alt for ref changes the probe's AUROC by at most 0.017, and the sign is consistently *against* the true allele (`ref_copy` scores the same or higher). This includes pooling at the variant's own position, where the hidden state changes by 37–112%.
