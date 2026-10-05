@@ -26,3 +26,7 @@ paper/*.log
 paper/*.out
 paper/*.toc
 paper/*.synctex.gz
+
+# fetch_data.sh scratch
+downloads/
+*.part

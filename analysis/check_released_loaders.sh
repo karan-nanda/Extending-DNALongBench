@@ -1,8 +1,11 @@
 #!/bin/bash
-# Installs the released loaders' dependencies into the WSL Caduceus venv, then runs
-# check_released_loaders.py. Run from Windows:
+# Runs check_released_loaders.py (robustness check R5) in the Caduceus venv, which also
+# holds the released loaders' dependencies (kipoiseq, pytabix, pyfaidx).
+# Build that venv first with analysis/caduceus_env_setup.sh. From the repo root:
+#   bash analysis/check_released_loaders.sh             # venv at ~/cad
+#   CAD_ENV=/path/to/venv bash analysis/check_released_loaders.sh
+# On Windows, inside WSL2:
 #   wsl -d Ubuntu-24.04 -u root --cd "/mnt/d/Extending DNALongBench" -- bash analysis/check_released_loaders.sh
 set -euo pipefail
-DEBIAN_FRONTEND=noninteractive apt-get install -y -qq zlib1g-dev > /dev/null
-VIRTUAL_ENV=/root/cad /root/.local/bin/uv pip install -q kipoiseq pytabix pyfaidx tqdm
-/root/cad/bin/python -W ignore analysis/check_released_loaders.py
+CAD_ENV=${CAD_ENV:-$HOME/cad}
+"$CAD_ENV/bin/python" -W ignore analysis/check_released_loaders.py

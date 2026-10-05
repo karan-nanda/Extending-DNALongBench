@@ -1,0 +1,13 @@
+# Main environment: CPU baselines, CNN, HyenaDNA (embeddings, probes, fine-tuning), figures.
+# Python 3.12. On Linux, pip's default torch 2.5.1 wheel is built for CUDA 12.4.
+# Caduceus needs a separate env (mamba-ssm): see analysis/caduceus_env_setup.sh.
+torch==2.5.1
+torchvision==0.20.1
+transformers==4.48.1
+numpy>=1.26,<2.3
+scipy==1.14.1
+pandas==2.2.3
+scikit-learn==1.7.0
+matplotlib==3.10.8
+einops==0.8.2
+tqdm

@@ -8,8 +8,8 @@ on records built exactly like parse_eQTL (variant..TSS span, N-padded to 450 kb;
 built here with eqtl_v2_cnn.build_strings because parse_eQTL needs the tabix mask).
 Also runs the repo's parse_eQTL itself when its dependencies import.
 
-Runs inside WSL (kipoiseq, pytabix, pyfaidx in /root/cad):
-  wsl -d Ubuntu-24.04 -u root --cd "/mnt/d/Extending DNALongBench" -- /root/cad/bin/python analysis/check_released_loaders.py
+Runs in the Caduceus venv (analysis/caduceus_env_setup.sh), which has the loaders'
+dependencies (kipoiseq, pytabix, pyfaidx); see analysis/check_released_loaders.sh.
 """
 import importlib.util
 import os
