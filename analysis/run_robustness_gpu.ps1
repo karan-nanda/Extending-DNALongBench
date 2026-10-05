@@ -9,7 +9,7 @@
 #       10 init seeds, each trained one full epoch
 #   R8  CNN refalt with test-time ablation, seeds 1 and 2 on all 5 chrom folds
 #       (seed 0 exists in analysis\results\cnn_ablation)
-# Pause Wallpaper Engine / games while this runs.
+# Close other GPU apps while this runs.
 Set-Location (Split-Path $PSScriptRoot -Parent)
 $res = "analysis\results\robustness"
 New-Item -ItemType Directory -Force $res | Out-Null

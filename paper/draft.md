@@ -1,5 +1,7 @@
 # Long-context DNA models do not use the allele: an audit of the DNALongBench eQTL task
 
+> **Historical draft, kept for provenance — not the paper.** The paper is `paper/body.tex` (PDFs: `recomb.pdf`, `workshop.pdf`, `appendix.pdf`). Numbers and claim wording here predate the robustness pass and the fine-tuning run; where they differ, the PDFs are correct.
+
 *Working notes, 2026-09-19. **Superseded for claim wording by `workshop_draft.md` and matrix §14 (robustness).** Numbers trace to `dnalongbench_coverage_matrix.md` (§) and `analysis/`. [TODO] marks open items.*
 
 ---

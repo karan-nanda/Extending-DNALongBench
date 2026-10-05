@@ -4,7 +4,7 @@
 #   powershell -ExecutionPolicy Bypass -File analysis\run_r6.ps1
 #
 # ~4.5 h for HyenaDNA (rev) + ~1.5 h for Caduceus (fwd, WSL), then a few minutes of CPU.
-# Peak GPU ~4.8 GB; still worth pausing Wallpaper Engine.
+# Peak GPU ~4.8 GB; close other GPU apps.
 Set-Location (Split-Path $PSScriptRoot -Parent)
 
 "$(Get-Date -Format s) R6 HyenaDNA"
